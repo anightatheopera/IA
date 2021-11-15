@@ -30,6 +30,7 @@ estcliente(IdCliente, Res) :-
     findall((IdEst,IdEnc), encomenda(IdEnc,(IdEst,_,IdCliente), _, _, _), Res).
 
 % predicado 3
+servEstaf(IdEst, Res) :- findall(IdCliente, encomenda(_,(IdEst, _, IdCliente), _, _,_), Res).
 
 % predicado 4
 
