@@ -22,7 +22,29 @@ ecotrans(Res) :-
 estcliente(IdCliente, Res) :-
     findall((IdEst,IdEnc), encomenda(IdEnc,(IdEst,_,IdCliente), _, _, _), Res).
 
+% predicado 3
+
+% predicado 4
+
+% predicado 5
+
+% predicado 6
+classificacaoMedia( IdEst, Media ):-
+	findall(Class, estafeta(IdEst, _, [(_,Class)], L),
+	sum_list( L, Sum ),
+	length( L, Length ),
+	Length > 0, 
+	Media is Sum / Length.
+ 
+% predicado 7
+
+% predicado 8
+
+% predicado 9
+
 % predicado 10
 pesototal(IdEst, Data, Res) :-
     findall(Peso, encomenda(_,(IdEst,_,_),(Data,_),(Peso, _, _, _), _), Pesos),
     sum_list(Pesos, Res).
+
+
