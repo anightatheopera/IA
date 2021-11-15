@@ -1,6 +1,5 @@
 :- consult([conhecimento]).
 
-% funções auxiliares -----------------------------
 
 % [(A, Number)] -> (A, Number)
 max_on_snd([H], H).
@@ -9,22 +8,23 @@ max_on_snd([(A0,N0)|T], Res) :-
     Max is max(N0, N1),
     (Max =:= N0 -> Res = (A0,N0); Res = (A1,N1)).
 
-% ------------------------------------------------
+% [(tuples)] -> Sum(values in pos X)
+sumTuples(_,[],0).
+sumTuples(Pos,[Tuple|T],Sum) :-
+        sumTuples(Pos,T,Sum1),
+        arg(Pos,Tuple,Elem),
+        Sum is Sum1 + Elem.
 
 % predicado 1
-maisecologico(Res) :-
-    % encontrar todos os transportes
-    findall((EcoRate,IdT),
-          transporte(IdT, _, _, _, EcoRate),
-          L0),
-    sort(0, @>=, L0, [(_,IdT)|_]),
+ecotrans(Res) :- 
+    transporte(IdBike, bicicleta, _, _, _),
     findall((Id, N)
         , (estafeta(Id, _, _)
-            , findall(_, encomenda(_, (Id, IdT, _), _, _, _), Es)
+            , findall(_, encomenda(_, (Id, IdBike, _), _, _, _), Es)
             , length(Es, N))
         , L),
     max_on_snd(L, (Res, _)).
-    
+
 % predicado 2
 estcliente(IdCliente, Res) :-
     findall((IdEst,IdEnc), encomenda(IdEnc,(IdEst,_,IdCliente), _, _, _), Res).
@@ -36,13 +36,12 @@ estcliente(IdCliente, Res) :-
 % predicado 5
 
 % predicado 6
-classificacaoMedia( IdEst, Media ):-
-	findall(Class, estafeta(IdEst, _, [(_,Class)], L),
-	sum_list( L, Sum ),
-	length( L, Length ),
-	Length > 0, 
-	Media is Sum / Length.
- 
+classificacaoMedia( IdEst, Media ):-                                
+        estafeta(IdEst, _, L),
+        sumTuples(2,L, Sum ),                      
+        length( L, Length ),
+        (Length > 0 -> Media is div(Sum,Length) ; Media is 0).
+
 % predicado 7
 
 % predicado 8
