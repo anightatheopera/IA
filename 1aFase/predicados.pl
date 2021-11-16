@@ -16,6 +16,8 @@ sumTuples(Pos,[Tuple|T],Sum) :-
         sumTuples(Pos,T,Sum1),
         arg(Pos,Tuple,Elem),
         Sum is Sum1 + Elem.
+%Concat
+concat([],L2,L2). concat([Head|Tail],L2,[Head|L3]) :- concat(Tail,L2,L3).
 
 % (D_inicial/Mi/Yi,D_final/Mf/Yf,[Sent],[NotSent],(D/M/Y,Estado)) -> [Lista]
 checkValidade([],_,_,[]).
