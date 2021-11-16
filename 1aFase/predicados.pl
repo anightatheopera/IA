@@ -1,5 +1,5 @@
 :- consult([conhecimento,utils]).
-:- dynamic max_on_snd/2.
+:- dynamic checkTransport/4, max_on_snd/2.
 
 %============================================================================================
 %                                       PREDICADOS
@@ -19,7 +19,8 @@ estcliente(IdCliente, Res) :-
     findall((IdEst,IdEnc), encomenda(IdEnc,(IdEst,_,IdCliente), _, _, _), Res).
 
 % predicado 3
-servEstaf(IdEst, Res) :- findall(IdCliente, encomenda(_,(IdEst, _, IdCliente), _, _,_), Res).
+servEstaf(IdEst, Res) :- 
+    findall(IdCliente, encomenda(_,(IdEst, _, IdCliente), _, _,_), Res).
 
 % predicado 4
 
@@ -33,6 +34,10 @@ classificacaoMedia( IdEst, Media ):-
         (Length > 0 -> Media is div(Sum,Length) ; Media is 0).
 
 % predicado 7
+entregasTransporte(Di/Mi/Yi,Df/Mf/Yf,B,M,C):-
+	findall((D/M/Y,IdTrans),encomenda(_,(_,IdTrans,_),(D/M/Y,_),(_,_,_,entregue),_),L),
+	checkValidade(L,Di/Mi/Yi,Df/Mf/Yf,T),
+	checkTransport(T,B,M,C).
 
 % predicado 8
 

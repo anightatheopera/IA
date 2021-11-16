@@ -31,3 +31,9 @@ checkState([],0,0).
 checkState([Estado|T],E,N):-
 	checkState(T,E1,N1),
 	(Estado = entregue-> (E is E1 + 1,N is N1); (E is E1, N is N1 + 1)).
+
+% [Transporte] -> XEntregues YEntregues ZEntregues
+checkTransport([],0,0,0).
+checkTransport([IdTrans|T],B,M,C):-
+	checkTransport(T,B1,M1,C1),
+	(IdTrans = 1 -> B is B1 + 1,M is M1, C is C1;(IdTrans = 2 -> M is M1 + 1, B is B1, C is C1;C is C1 + 1, B is B1, M is M1)).
