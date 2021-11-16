@@ -86,8 +86,8 @@ doit(7) :-
     entregasTransporte(Di/Mi/Yi,Df/Mf/Yf,B,M,C),
     write('                        '),nl,
     write('Querry Result -> Bicicleta:'),write(B),nl,
-    write('                 Mota:'),write(M),nl,
-    write('                 Carro:'),write(C),nl.
+    write('                 Mota     :'),write(M),nl,
+    write('                 Carro    :'),write(C),nl.
 
 doit(9) :- 
     write('                        '),nl,
@@ -110,7 +110,7 @@ doit(9) :-
     read(Yf), Yf>0, Yf=<2022,
     estadoIntrevalo(Di/Mi/Yi,Df/Mf/Yf,E,N),
     write('                        '),nl,
-    write('Querry Result -> Entregues:'),write(E),nl,
+    write('Querry Result -> Entregues   :'),write(E),nl,
     write('                 Nao Entregue:'),write(N),nl.
 
 doit(10) :-
