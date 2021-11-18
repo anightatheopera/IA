@@ -1,5 +1,5 @@
 :- consult([conhecimento,predicados,utils]).
-:- dynamic doit/1.
+:- dynamic pesototal/3, estadoIntrevalo/4, ecotrans/1, estcliente/2, valordia/2, servEstaf/2, classificacaoMedia/2, entregasTransporte/5, doit/1.
 
 %============================================================================================
 %                                       MENU
@@ -58,7 +58,7 @@ doit(3) :-
 
 doit(4) :-
     write('                        '),nl,
-    write('Insira uma data de um dia:'),nl,
+    write('Insira uma Data [Formato: DD/MM/YYYY]:'),nl,
     read(Data),
     valordia(Data,N),
     write('                        '),nl,
