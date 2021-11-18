@@ -23,8 +23,13 @@ servEstaf(IdEst, Res) :-
     findall(IdCliente, encomenda(_,(IdEst, _, IdCliente), _, _,_), Res).
 
 % predicado 4
+%encomenda(IdEncomenda, (IdEstafeta, idTransporte, idcliente), (Data, prazoEntrega), (Peso, Volume, Valor, Estado), concelho)
+valordia(Data, TotalFatorado) :-
+    findall(Valor, encomenda(_, (_,_,_), (Data, _), (_,_,Valor,_), _), Values),
+    sum_list(Values, TotalFatorado).
 
 % predicado 5
+
 
 % predicado 6
 classificacaoMedia( IdEst, Media ):-                                
@@ -40,6 +45,11 @@ entregasTransporte(Di/Mi/Yi,Df/Mf/Yf,B,M,C):-
 	checkTransport(T,B,M,C).
 
 % predicado 8
+%entregasEstafetas(DataI,DataF,Pair) :-
+%    encomenda(_, (IdEstafeta, _, _), (Data, _), (_, _, _, _), _),
+%    findall().
+%    findDeliveriesIDE(IdEstafeta,DataI,Data,DataF,Pair).
+
 
 % predicado 9
 estadoIntrevalo(Di/Mi/Yi,Df/Mf/Yf,E,N):-
