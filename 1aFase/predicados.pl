@@ -1,5 +1,4 @@
 :- consult([conhecimento,utils]).
-:- dynamic checkTransport/4, max_on_snd/2.
 
 %============================================================================================
 %                                       PREDICADOS
@@ -29,7 +28,9 @@ valordia(Data, TotalFatorado) :-
     sum_list(Values, TotalFatorado).
 
 % predicado 5
-
+freqZona(Res):-
+	findall((Concelho),encomenda(_,_,_,(_,_,_,entregue),Concelho),L),
+	freqs(L,Res).
 
 % predicado 6
 classificacaoMedia( IdEst, Media ):-                                
@@ -44,12 +45,11 @@ entregasTransporte(Di/Mi/Yi,Df/Mf/Yf,B,M,C):-
 	checkValidade(L,Di/Mi/Yi,Df/Mf/Yf,T),
 	checkTransport(T,B,M,C).
 
-% predicado 8
-%entregasEstafetas(DataI,DataF,Pair) :-
-%    encomenda(_, (IdEstafeta, _, _), (Data, _), (_, _, _, _), _),
-%    findall().
-%    findDeliveriesIDE(IdEstafeta,DataI,Data,DataF,Pair).
-
+%predicado 8
+entregasEstafeta(Di/Mi/Yi,Df/Mf/Yf,Out):-
+	findall((D/M/Y,IdEst),encomenda(_,(IdEst,_,_),(D/M/Y,_),(_,_,_,entregue),_),Estafetas),
+	checkValidade(Estafetas,Di/Mi/Yi,Df/Mf/Yf,T),
+	freqs(T,Out).
 
 % predicado 9
 estadoIntrevalo(Di/Mi/Yi,Df/Mf/Yf,E,N):-

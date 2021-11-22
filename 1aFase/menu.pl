@@ -1,5 +1,5 @@
 :- consult([conhecimento,predicados,utils]).
-:- dynamic pesototal/3, estadoIntrevalo/4, ecotrans/1, estcliente/2, valordia/2, servEstaf/2, classificacaoMedia/2, entregasTransporte/5, doit/1.
+:- dynamic doit/1.
 
 %============================================================================================
 %                                       MENU
@@ -29,11 +29,14 @@ menu :- repeat,
     write('+-----+----------------------------------------------------------------------------------------------+'),nl,
     write('|  10 | Calcular peso total transportado por estafeta num determinado dia                            |'),nl,
     write('+-----+----------------------------------------------------------------------------------------------+'),nl,
-    write('|                                                                                                    |'),nl,
+    write('|  11 | Sair do Menu                                                                                 |'),nl,
     write('+----------------------------------------------------------------------------------------------------+'),nl,
     write('Enter your choice: '),nl,
-    read(Choice), Choice>0, Choice=<10,
-    doit(Choice), Choice=10, !.
+    read(Choice),
+    Choice>0,
+    Choice=<11,
+    doit(Choice),
+    (Choice = 3 -> !, fail ; true ).
 
 doit(1) :-
     ecotrans(N),
@@ -58,11 +61,17 @@ doit(3) :-
 
 doit(4) :-
     write('                        '),nl,
-    write('Insira uma Data [Formato: DD/MM/YYYY]:'),nl,
+    write('Insira uma data de um dia:'),nl,
     read(Data),
     valordia(Data,N),
     write('                        '),nl,
     write('Querry Result -> Valor faturado durante a Data inserida: '),write(N),nl.
+
+doit(5) :-
+    freqZona(Res),
+    write('                        '),nl,
+    write('Querry Result -> Frequencia de localidades: '),write(Res),nl.
+
 
 
 doit(6) :- 
@@ -98,30 +107,28 @@ doit(7) :-
     write('                 Mota     :'),write(M),nl,
     write('                 Carro    :'),write(C),nl.
 
-%doit(8) :-
-%    write('                        '),nl,
-%    write('Insira o Dia Inicial:'),nl,
-%    read(Di), Di>0, Di=<31,
-%    write('                        '),nl,
-%    write('Insira o Mes Inicial:'),nl,
-%    read(Mi), Mi>0, Mi=<12,
-%    write('                        '),nl,
-%    write('Insira o Ano Inicial:'),nl,
-%    read(Yi), Yi>0, Yi=<2022,
-%    write('                        '),nl,
-%    write('Insira o Dia Final:'),nl,
-%    read(Df), Df>0, Df=<31,
-%    write('                        '),nl,
-%    write('Insira o Mes Final:'),nl,
-%    read(Mf), Mf>0, Mf=<12,
-%    write('                        '),nl,
-%    write('Insira o Ano Final:'),nl,
-%    read(Yf), Yf>0, Yf=<2022,
-%    entregasEstafetas(Di/Mi/Yi,Df/Mf/Yf,B,M,C),
-%    write('                        '),nl,
-%    write('Querry Result -> Bicicleta:'),write(B),nl,
-%    write('                 Mota     :'),write(M),nl,
-%    write('                 Carro    :'),write(C),nl.
+doit(8) :-
+    write('                        '),nl,
+    write('Insira o Dia Inicial:'),nl,
+    read(Di), Di>0, Di=<31,
+    write('                        '),nl,
+    write('Insira o Mes Inicial:'),nl,
+    read(Mi), Mi>0, Mi=<12,
+    write('                        '),nl,
+    write('Insira o Ano Inicial:'),nl,
+    read(Yi), Yi>0, Yi=<2022,
+    write('                        '),nl,
+    write('Insira o Dia Final:'),nl,
+    read(Df), Df>0, Df=<31,
+    write('                        '),nl,
+    write('Insira o Mes Final:'),nl,
+    read(Mf), Mf>0, Mf=<12,
+    write('                        '),nl,
+    write('Insira o Ano Final:'),nl,
+    read(Yf), Yf>0, Yf=<2022,
+    entregasEstafeta(Di/Mi/Yi,Df/Mf/Yf,Out),
+    write('                        '),nl,
+    write('Querry Result -> Entregas por estafeta:'),write(Out),nl.
 
 doit(9) :- 
     write('                        '),nl,
@@ -157,4 +164,6 @@ doit(10) :-
     write('                        '),nl,
     pesototal(Id, Data, N),
     write('Querry Result -> Peso Total:'),write(N),nl.
+
+doit(11).
 

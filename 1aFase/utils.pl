@@ -10,6 +10,21 @@ max_on_snd([(A0,N0)|T], Res) :-
     Max is max(N0, N1),
     (Max =:= N0 -> Res = (A0,N0); Res = (A1,N1)).
 
+%[X]->[(X,n)]
+freqs([],[]).
+freqs(In,Out):-
+    freqs(In,[],Out).
+
+freqs([],Out,Out).
+freqs([X|Xs],Table,Out):-
+    \+ member((X,_),Table),
+    freqs(Xs,[(X,1)|Table],Out).
+
+freqs([X|Xs],Table,Out) :-
+    selectchk((X,N),Table, Others),
+    M is N + 1,
+    freqs(Xs, [(X,M)| Others], Out).
+
 % [(tuples)] -> Sum(values in pos X)
 sumTuples(_,[],0).
 sumTuples(Pos,[Tuple|T],Sum) :-
