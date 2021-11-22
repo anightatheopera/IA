@@ -36,7 +36,7 @@ menu :- repeat,
     Choice>0,
     Choice=<11,
     doit(Choice),
-    (Choice = 3 -> !, fail ; true ).
+    (Choice = 11 -> !, fail ; true ).
 
 doit(1) :-
     ecotrans(N),
