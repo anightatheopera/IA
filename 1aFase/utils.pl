@@ -1,4 +1,6 @@
-:- consult([conhecimento]).
+:- consult([conhecimento,invariantes]).
+:- op(900,xfy,'::').
+:-dynamic '-'/1.
 
 %============================================================================================
 %                                       Auxiliar
@@ -64,4 +66,29 @@ findDeliveriesIDE(IdE,DateI,Data,DateF,NEncs) :-
 	findall(Id, encomenda(Id,(IdE,_,_),(_,_),(_,_,_,entregue),_), List),
 	sum_list(List, NEncs).
 
+% INVARIANTES
 
+% Evolucao
+teste([]).
+teste([R|LR]):- R, teste(LR).
+
+evolucao(Termo) :- 
+    solucoes(Invariante,+Termo::Invariante, Lista),
+    insercao(Termo),
+    teste(Lista).
+
+insercao(Termo) :- assert(Termo).
+insercao(Termo) :- retract(Termo),!,fail.
+
+% Involucao
+involucao(Termo) :- Termo,
+                    solucoes(Invariante,-Termo::Invariante,Lista),
+                    remocao(Termo),
+                    teste(Lista).
+
+remocao(Termo) :- retract(Termo).
+remocao(Termo) :- assert(Termo),!,fail.
+
+solucoes(X,Y,Z) :- findall(X,Y,Z).
+
+comprimento(S,N) :- length(S,N).
