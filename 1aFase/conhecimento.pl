@@ -1,3 +1,5 @@
+%Ficheiro de exemplo da base de conhecimento, verdadeiro ficheiro tem o nome "knowledge.pl"
+
 %estafeta(IdEstafeta, Nome, [(IdEncomenda, Classificacao)])
 estafeta(1, 'Ana Fernandes', [(1,2),(3,4),(4,3)]).
 estafeta(2, 'Ramiro Silva', [(2,1),(5,2)]).

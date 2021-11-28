@@ -1,3 +1,4 @@
+:- consult([knowledge]).
 :- op(900,xfy,'::').
 :-style_check(-discontiguous).
 :-style_check(-singleton).

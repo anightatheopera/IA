@@ -1,4 +1,4 @@
-:- consult([conhecimento,utils]).
+:- consult([knowledge,utils]).
 
 %============================================================================================
 %                                       PREDICADOS

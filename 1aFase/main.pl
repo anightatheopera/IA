@@ -1,1 +1,1 @@
-:- consult([conhecimento,predicados,utils,menu,invariantes]).
+:- consult([knowledge,predicados,utils,menu,invariantes]).
