@@ -141,7 +141,7 @@ doit(10) :-
     write('Insira um ID de estafeta:'),nl,
     read(Id), Id>0, Id=<300,
     write('                        '),nl,
-    write('Insira uma data'),nl,
+    write('Insira uma data:'),nl,
     read(Data), 
     write('                        '),nl,
     pesototal(Id, Data, N),
@@ -158,7 +158,87 @@ doit(12) :-
     write('Insira o Nome do novo estafeta:'),nl,
     read(Name),
     write('                        '),nl,
-    write('Insira uma lista de IdEncomendas e Classicacoes (formato [(Id,Class),...]):')
+    write('Insira uma lista de IdEncomendas e Classicacoes (formato [(IdEnc,Class),...]):'),nl,
+    read(X),
+    write('                        '),nl,
+    add_estafeta(Id,Name,X),
+    write('Resultado -> Estafeta Adicionado').
+
+
+doit(13) :-
+    write('                        '),nl,
+    write('Insira o ID do estafeta a ser eliminado:'),nl,
+    read(Id), Id>0,
+    rem_estafeta(Id),
+    write('Resultado -> Estafeta Eliminado').
+
+doit(14) :-  
+    write('                        '),nl,
+    write('Insira o ID do novo cliente:'),nl,
+    read(Id), Id>0,
+    write('                        '),nl,
+    write('Insira o Nome do novo cliente:'),nl,
+    read(Name),
+    write('                        '),nl,
+    write('Insira uma lista de IdEncomendas (formato [IdEnc,...]):'),nl,
+    read(X),
+    write('                        '),nl,
+    add_cliente(Id,Name,X),
+    write('Resultado -> Cliente Adicionado').
+
+doit(15) :- 
+    write('                        '),nl,
+    write('Insira o ID do cliente a ser eliminado:'),nl,
+    read(Id), Id>0,
+    write('                        '),nl,
+    rem_cliente(Id),
+    write('Resultado -> Estafeta Eliminado').
+
+doit(16) :- 
+    write('                        '),nl,
+    write('Insira o ID da nova encomenda:'),nl,
+    read(Id), Id>0,
+    write('                        '),nl,
+    write('Insira um ID de estafeta:'),nl,
+    read(IdE), Id>0,
+    write('                        '),nl,
+    write('Insira um ID de transporte:'),nl,
+    read(IdT), Id>0,
+    write('                        '),nl,
+    write('Insira um ID de cliente:'),nl,
+    read(IdT), Id>0,
+    write('                        '),nl,
+    write('Insira uma data:'),nl,
+    read(Data), 
+    write('                        '),nl,
+    write('Insira um prazo (mesmo formato que uma data):'),nl,
+    read(Prazo), 
+    write('                        '),nl,
+    write('Insira o peso:'),nl,
+    read(Peso), 
+    write('                        '),nl,
+    write('Insira o volume:'),nl,
+    read(Volume), 
+    write('                        '),nl,
+    write('Insira o valor:'),nl,
+    read(Valor), 
+    write('                        '),nl,
+    write('Insira o estado (entregue | pendente | cancelada):'),nl,
+    read(Estado), 
+    write('                        '),nl,
+    write('Insira o conselho:'),nl,
+    read(Conselho), 
+    write('                        '),nl,    
+    add_encomenda(Id,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,Estado),Concelho),
+    write('Resultado -> Encomenda Adicionada').
+
+doit(17) :- 
+    write('                        '),nl,
+    write('Insira o ID da encomenda a ser eliminada:'),nl,
+    read(Id), Id>0,
+    write('                        '),nl,
+    rem_encomenda(Id),
+    write('Resultado -> Encomenda Eliminado').    
 
 doit(0):-
 	sleep(1),
