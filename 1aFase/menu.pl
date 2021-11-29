@@ -31,12 +31,26 @@ menu :- repeat,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('| 11 | Dar print da base de conhecimentos com paginação                                              |'),nl,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('|  METODOS DE ADICIONAR/REMOVER CONHECIMENTO                                                         |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 12 | Adicionar Estafeta                                                                            |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 13 | Remover Estafeta                                                                              |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 14 | Adicionar Cliente                                                                             |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 15 | Remover Cliente                                                                               |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 16 | Adicionar Encomenda                                                                           |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 17 | Remover Encomenda                                                                             |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('|  0 | Sair do Menu                                                                                  |'),nl,
     write('+----------------------------------------------------------------------------------------------------+'),nl,
     write('Escolha uma opção: '),nl,
     read(Choice),
     0=<Choice,
-    Choice=<11,
+    Choice=<17,
     (Choice == 0 -> write('A sair do programa...'),nl, doit(Choice);doit(Choice)),
     Choice = 0,
     !.
@@ -135,6 +149,16 @@ doit(10) :-
 
 doit(11):-
 	write("Não colocar pontos depois dos inputs"),nl,shell('python python.py').
+
+doit(12) :-
+    write('                        '),nl,
+    write('Insira o ID do novo estafeta:'),nl,
+    read(Id), Id>0,
+    write('                        '),nl,
+    write('Insira o Nome do novo estafeta:'),nl,
+    read(Name),
+    write('                        '),nl,
+    write('Insira uma lista de IdEncomendas e Classicacoes (formato [(Id,Class),...]):')
 
 doit(0):-
 	sleep(1),

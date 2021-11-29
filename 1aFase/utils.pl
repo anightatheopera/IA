@@ -1,4 +1,4 @@
-:- consult([knowledge,invariantes]).
+:- consult([knowledge,invariantes,predicados]).
 :- op(900,xfy,'::').
 :-dynamic '-'/1.
 

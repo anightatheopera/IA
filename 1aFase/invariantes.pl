@@ -38,23 +38,3 @@
                                     solucoes( ID, encomenda( ID, _, _, _, _ ), R ),
                                     comprimento( R, 1 )
                                 ).
-
-% ------------ TRANSPORTE -------------- --- -- -- - - - - 
-
-% Não permitir a INSERÇÃO de conhecimento repetido pelo id 
-+transporte( IdT, _, _, _, _, _ ) :: (
-                                        solucoes( IdT, transporte( IdT, _, _, _, _, _ ), R ),
-                                        comprimento( R, 1 )
-                                     ).
-
-% Não permite a INSERÇÃO de qualquer conhecimento
-+transporte( _, _, _, _, _, _ ) :: (
-                                    solucoes( _, transporte( _, _, _, _, _, _ ), R ),
-                                    comprimento( R, 1 )
-                                   ). 
-
-% Não permite REMOÇÃO de qualquer conhecimento 
--transporte( _, _, _, _, _, _ ) :: (
-                                    solucoes( _, transporte( _, _, _, _, _, _ ), R ),
-                                    comprimento( R, 0 )
-                                   ). 
