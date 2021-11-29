@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 with open('knowledge.pl') as infile:
     encomendas = []
     estafetas = []
