@@ -35,26 +35,12 @@
 
 % Não permitir a INSERÇÃO de conhecimento repetido pelo id 
 +encomenda( Id, _, _, _, _ ) :: (
-                                    solucoes( ID, encomenda( ID, _, _, _, _ ), R ),
+                                    solucoes( Id, encomenda( Id, _, _, _, _ ), R ),
                                     comprimento( R, 1 )
                                 ).
 
-% ------------ TRANSPORTE -------------- --- -- -- - - - - 
-
-% Não permitir a INSERÇÃO de conhecimento repetido pelo id 
-+transporte( IdT, _, _, _, _, _ ) :: (
-                                        solucoes( IdT, transporte( IdT, _, _, _, _, _ ), R ),
-                                        comprimento( R, 1 )
-                                     ).
-
-% Não permite a INSERÇÃO de qualquer conhecimento
-+transporte( _, _, _, _, _, _ ) :: (
-                                    solucoes( _, transporte( _, _, _, _, _, _ ), R ),
-                                    comprimento( R, 1 )
-                                   ). 
-
-% Não permite REMOÇÃO de qualquer conhecimento 
--transporte( _, _, _, _, _, _ ) :: (
-                                    solucoes( _, transporte( _, _, _, _, _, _ ), R ),
+% Não permitir a REMOÇÃO de conhecimento repetido pelo id
+-encomenda( Id, _, _, _, _ ) :: (
+                                    solucoes( Id, encomenda( Id, _, _, _, _ ), R ),
                                     comprimento( R, 0 )
-                                   ). 
+                                ). 

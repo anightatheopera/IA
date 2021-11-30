@@ -1,4 +1,20 @@
 :- consult([knowledge,utils]).
+:- dynamic checkState/3, checkTransport/4, checkValidade/4, max_on_snd/2, freqs/2, sumTuples/3, encomenda/5, estafeta/3, transporte/5, evolucao/1, involucao/1.
+
+%============================================================================================
+%                                       ADD/REMOVE
+
+add_estafeta(IdE,Nome,[(IdEnc,Class)]) :- evolucao(estafeta(IdE,Nome,[(IdEnc,Class)])).
+
+rem_estafeta(IdE) :- involucao(estafeta(IdE,_,_)).
+
+add_cliente(IdC,Nome,[IdEnc]) :- evolucao(cliente(IdC,Nome,[IdEnc])).
+
+rem_cliente(IdC) :- involucao(cliente(IdC,_,_)).
+
+add_encomenda(IdEnc,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,Estado),Concelho) :- evolucao(encomenda(IdEnc,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,Estado),Concelho)).
+
+rem_encomenda(IdEnc) :- involucao(encomenda(IdEnc,_,_,_,_)).
 
 %============================================================================================
 %                                       PREDICADOS
