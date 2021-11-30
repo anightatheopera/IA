@@ -1,21 +1,5 @@
 :- consult([knowledge,utils]).
 
-
-%============================================================================================
-%                                       ADD/REMOVE
-
-add_estafeta(IdE,Nome,[(IdEnc,Class)]) :- evolucao(estafeta(IdE,Nome,[(IdEnc,Class)])).
-
-rem_estafeta(IdE) :- involucao(estafeta(IdE,_,_)).
-
-add_cliente(IdC,Nome,[IdEnc]) :- evolucao(cliente(IdC,Nome,[IdEnc])).
-
-rem_cliente(IdC) :- involucao(cliente(IdC,_,_)).
-
-add_encomenda(IdEnc,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,Estado),Concelho) :- evolucao(encomenda(IdEnc,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,Estado),Concelho)).
-
-rem_encomenda(IdEnc) :- involucao(encomenda(IdEnc,_,_,_,_).
-
 %============================================================================================
 %                                       PREDICADOS
 
@@ -77,5 +61,4 @@ estadoIntrevalo(Di/Mi/Yi,Df/Mf/Yf,E,N):-
 pesototal(IdEst, Data, Res) :-
     findall(Peso, encomenda(_,(IdEst,_,_),(Data,_),(Peso, _, _, _), _), Pesos),
     sum_list(Pesos, Res).
-
 

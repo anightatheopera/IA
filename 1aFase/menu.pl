@@ -31,26 +31,12 @@ menu :- repeat,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('| 11 | Dar print da base de conhecimentos com paginação                                              |'),nl,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
-    write('|  METODOS DE ADICIONAR/REMOVER CONHECIMENTO                                                         |'),nl,
-    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
-    write('| 12 | Adicionar Estafeta                                                                            |'),nl,
-    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
-    write('| 13 | Remover Estafeta                                                                              |'),nl,
-    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
-    write('| 14 | Adicionar Cliente                                                                             |'),nl,
-    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
-    write('| 15 | Remover Cliente                                                                               |'),nl,
-    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
-    write('| 16 | Adicionar Encomenda                                                                           |'),nl,
-    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
-    write('| 17 | Remover Encomenda                                                                             |'),nl,
-    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('|  0 | Sair do Menu                                                                                  |'),nl,
     write('+----------------------------------------------------------------------------------------------------+'),nl,
     write('Escolha uma opção: '),nl,
     read(Choice),
     0=<Choice,
-    Choice=<17,
+    Choice=<11,
     (Choice == 0 -> write('A sair do programa...'),nl, doit(Choice);doit(Choice)),
     Choice = 0,
     !.
@@ -66,7 +52,7 @@ doit(2) :-
     read(Id), Id>0, Id=<500,
     estcliente(Id,N),
     write('                        '),nl,
-    write('Resultado -> (ID estafeta, ID respetiva encomenda: '),write(N),nl.
+    write('Resultado -> (ID estafeta, ID respetiva encomenda): '),write(N),nl.
 
 doit(3) :-
     write('                        '),nl,
@@ -141,7 +127,7 @@ doit(10) :-
     write('Insira um ID de estafeta:'),nl,
     read(Id), Id>0, Id=<300,
     write('                        '),nl,
-    write('Insira uma data:'),nl,
+    write('Insira uma data'),nl,
     read(Data), 
     write('                        '),nl,
     pesototal(Id, Data, N),
@@ -150,97 +136,6 @@ doit(10) :-
 doit(11):-
 	write("Não colocar pontos depois dos inputs"),nl,shell('python python.py').
 
-doit(12) :-
-    write('                        '),nl,
-    write('Insira o ID do novo estafeta:'),nl,
-    read(Id), Id>0,
-    write('                        '),nl,
-    write('Insira o Nome do novo estafeta:'),nl,
-    read(Name),
-    write('                        '),nl,
-    write('Insira uma lista de IdEncomendas e Classicacoes (formato [(IdEnc,Class),...]):'),nl,
-    read(X),
-    write('                        '),nl,
-    add_estafeta(Id,Name,X),
-    write('Resultado -> Estafeta Adicionado').
-
-
-doit(13) :-
-    write('                        '),nl,
-    write('Insira o ID do estafeta a ser eliminado:'),nl,
-    read(Id), Id>0,
-    rem_estafeta(Id),
-    write('Resultado -> Estafeta Eliminado').
-
-doit(14) :-  
-    write('                        '),nl,
-    write('Insira o ID do novo cliente:'),nl,
-    read(Id), Id>0,
-    write('                        '),nl,
-    write('Insira o Nome do novo cliente:'),nl,
-    read(Name),
-    write('                        '),nl,
-    write('Insira uma lista de IdEncomendas (formato [IdEnc,...]):'),nl,
-    read(X),
-    write('                        '),nl,
-    add_cliente(Id,Name,X),
-    write('Resultado -> Cliente Adicionado').
-
-doit(15) :- 
-    write('                        '),nl,
-    write('Insira o ID do cliente a ser eliminado:'),nl,
-    read(Id), Id>0,
-    write('                        '),nl,
-    rem_cliente(Id),
-    write('Resultado -> Estafeta Eliminado').
-
-doit(16) :- 
-    write('                        '),nl,
-    write('Insira o ID da nova encomenda:'),nl,
-    read(Id), Id>0,
-    write('                        '),nl,
-    write('Insira um ID de estafeta:'),nl,
-    read(IdE), Id>0,
-    write('                        '),nl,
-    write('Insira um ID de transporte:'),nl,
-    read(IdT), Id>0,
-    write('                        '),nl,
-    write('Insira um ID de cliente:'),nl,
-    read(IdT), Id>0,
-    write('                        '),nl,
-    write('Insira uma data:'),nl,
-    read(Data), 
-    write('                        '),nl,
-    write('Insira um prazo (mesmo formato que uma data):'),nl,
-    read(Prazo), 
-    write('                        '),nl,
-    write('Insira o peso:'),nl,
-    read(Peso), 
-    write('                        '),nl,
-    write('Insira o volume:'),nl,
-    read(Volume), 
-    write('                        '),nl,
-    write('Insira o valor:'),nl,
-    read(Valor), 
-    write('                        '),nl,
-    write('Insira o estado (entregue | pendente | cancelada):'),nl,
-    read(Estado), 
-    write('                        '),nl,
-    write('Insira o conselho:'),nl,
-    read(Conselho), 
-    write('                        '),nl,    
-    add_encomenda(Id,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,Estado),Concelho),
-    write('Resultado -> Encomenda Adicionada').
-
-doit(17) :- 
-    write('                        '),nl,
-    write('Insira o ID da encomenda a ser eliminada:'),nl,
-    read(Id), Id>0,
-    write('                        '),nl,
-    rem_encomenda(Id),
-    write('Resultado -> Encomenda Eliminado').    
-
 doit(0):-
 	sleep(1),
 	halt.
-
