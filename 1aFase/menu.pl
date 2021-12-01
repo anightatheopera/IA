@@ -1,4 +1,5 @@
 :- consult([transportes,estafetas,clientes,encomendas,predicados,utils]).
+:- consult([knowledge,predicados,utils]).
 :- dynamic doit/1.
 
 %============================================================================================
@@ -31,12 +32,26 @@ menu :- repeat,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('| 11 | Dar print da base de conhecimentos com paginação                                              |'),nl,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| MÉTODOS DE REMOÇÃO E ADIÇÃO DE CONHECIMENTO                                                        |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 12 | Adicionar um Estafeta                                                                         |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 13 | Remover um Estafeta                                                                           |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 14 | Adicionar um Cliente                                                                          |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 15 | Remover um Cliente                                                                            |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 16 | Adicionar uma Encomenda                                                                       |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('| 17 | Remover uma Encomenda                                                                         |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('|  0 | Sair do Menu                                                                                  |'),nl,
     write('+----------------------------------------------------------------------------------------------------+'),nl,
     write('Escolha uma opção: '),nl,
     read(Choice),
     0=<Choice,
-    Choice=<11,
+    Choice=<17,
     (Choice == 0 -> write('A sair do programa...'),nl, doit(Choice);doit(Choice)),
     Choice = 0,
     !.
@@ -74,8 +89,6 @@ doit(5) :-
     freqZona(Res),
     write('                        '),nl,
     write('Resultado -> (Localidade, Número de encomendas): '),write(Res),nl.
-
-
 
 doit(6) :- 
     write('                        '),nl,
@@ -133,8 +146,105 @@ doit(10) :-
     pesototal(Id, Data, N),
     write('Resultado -> Peso total das encomendas:'),write(N),nl.
 
-doit(11):-
+doit(11) :-
+    write('                        '),nl,
 	write("Não colocar pontos depois dos inputs"),nl,shell('python python.py').
+
+doit(12) :-
+    write('                        '),nl,
+    write('Insira o ID do novo estafeta:'),nl,
+    read(Id), Id>0,
+    write('                        '),nl,
+    write('Insira o Nome do novo estafeta:'),nl,
+    write("(Formato: 'nome')"),nl,
+    read(Name),
+    write('                        '),nl,
+    write('Insira uma lista de (IdEncomenda,Classificação):'),nl,
+    write('(Formato: [(Id,Class),...])'),nl,
+    read(X),
+    add_estafeta(Id,Name,X),
+    write('                        '),nl,
+    write('Resultado -> Estafeta adicionado com sucesso').
+
+doit(13) :-
+    write('                        '),nl,
+    write('Insira o ID do estafeta a eliminar:'),nl,
+    read(Id), Id>0,
+    rem_estafeta(Id),
+    write('                        '),nl,
+    write('Resultado -> Estafeta eliminado com sucesso'),nl.
+
+doit(14) :-  
+    write('                        '),nl,
+    write('Insira o ID do novo cliente:'),nl,
+    read(Id), Id>0,
+    write('                        '),nl,
+    write('Insira o Nome do novo cliente:'),nl,
+    write("(Formato: 'nome')"),nl,
+    read(Name),
+    write('                        '),nl,
+    write('Insira uma lista de IdEncomendas:'),nl,
+    write('Formado: [Id1,...]'),nl,
+    read(X),
+    write('                        '),nl,
+    add_cliente(Id,Name,X),
+    write('Resultado -> Cliente Adicionado'),nl.
+
+doit(15) :- 
+    write('                        '),nl,
+    write('Insira o ID do cliente a ser eliminado:'),nl,
+    read(Id), Id>0,
+    write('                        '),nl,
+    rem_cliente(Id),
+    write('Resultado -> Estafeta Eliminado'),nl.
+
+doit(16) :- 
+    write('                        '),nl,
+    write('Insira o ID da nova encomenda:'),nl,
+    read(Id), Id>0,
+    write('                        '),nl,
+    write('Insira um ID de estafeta:'),nl,
+    read(IdE), Id>0,
+    write('                        '),nl,
+    write('Insira um ID de transporte:'),nl,
+    read(IdT), Id>0,
+    write('                        '),nl,
+    write('Insira um ID de cliente:'),nl,
+    read(IdC), Id>0,
+    write('                        '),nl,
+    write('Insira uma data:'),nl,
+    read(Data), 
+    write('                        '),nl,
+    write('Insira um prazo:'),nl,
+    write('Formato: DD/MM/YYY'),nl,
+    read(Prazo), 
+    write('                        '),nl,
+    write('Insira o peso:'),nl,
+    read(Peso), 
+    write('                        '),nl,
+    write('Insira o volume:'),nl,
+    read(Volume), 
+    write('                        '),nl,
+    write('Insira o valor:'),nl,
+    read(Valor), 
+    write('                        '),nl,
+    write('Insira o estado:'),nl,
+    write('Formato: entregue | pendente | cancelada'),nl,
+    read(Estado), 
+    write('                        '),nl,
+    write('Insira o concelho:'),nl,
+    read(Concelho), 
+    write('                        '),nl,    
+    add_encomenda(Id,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,Estado),Concelho),
+    write('Resultado -> Encomenda Adicionada'),nl.
+
+doit(17) :- 
+    write('                        '),nl,
+    write('Insira o ID da encomenda a ser eliminada:'),nl,
+    read(Id), Id>0,
+    write('                        '),nl,
+    rem_encomenda(Id),
+    write('Resultado -> Encomenda Eliminado'),nl. 
 
 doit(0):-
 	sleep(1),
