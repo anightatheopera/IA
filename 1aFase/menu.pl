@@ -1,4 +1,4 @@
-:- consult([knowledge,predicados,utils]).
+:- consult([transportes,estafetas,clientes,encomendas,predicados,utils]).
 :- dynamic doit/1.
 
 %============================================================================================

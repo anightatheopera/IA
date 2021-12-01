@@ -1,4 +1,4 @@
-:- consult([knowledge]).
+:- consult([transportes,estafetas,clientes,encomendas]).
 :- op(900,xfy,'::').
 :-style_check(-discontiguous).
 :-style_check(-singleton).

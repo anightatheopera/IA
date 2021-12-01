@@ -1,4 +1,4 @@
-:- consult([knowledge,invariantes]).
+:- consult([transportes,estafetas,clientes,encomendas,invariantes]).
 :- op(900,xfy,'::').
 :-dynamic '-'/1.
 
@@ -65,6 +65,30 @@ findDeliveriesIDE(IdE,DateI,Data,DateF,NEncs) :-
 	checkDate(DateI,DateF,Data),
 	findall(Id, encomenda(Id,(IdE,_,_),(_,_),(_,_,_,entregue),_), List),
 	sum_list(List, NEncs).
+
+%FUNSHIT
+
+printEstafetasFormated:-    
+        findall((A,B,C),estafeta(A,B,C),Y),    
+        maplist(format('estafeta(~q).\n'),Y).    
+     
+printClientesFormated:-    
+        findall((A,B,C),cliente(A,B,C),Y),    
+        maplist(format('cliente(~q).\n'),Y).
+        
+printEncomendaFormated:-    
+        findall((A,B,C,D,E),encomenda(A,B,C,D,E),Y),    
+        maplist(format('encomenda(~q).\n'),Y).    
+     
+printTransportesFormated:-    
+        findall((A,B,C,D,E),transporte(A,B,C,D,E),Y),    
+        maplist(format('transporte(~q).\n'),Y).    
+     
+saveConhecimento:-    
+        (tell('transportes.pl'),write('%transporte(idTransporte,nome, pesoMáximo, velocidadeMédia, nivelEcológico).\n'), printTransportesFormated), told,    
+        (tell('clientes.pl'),write('%cliente(idCliente,nome,[encomendas]).\n'), printClientesFormated), told,    
+        (tell('estafetas.pl'),write('%estafeta(idEstafeta, nome, [(idEncomenda, classificação)]).\n'), printEstafetasFormated), told,    
+        (tell('encomendas.pl'),write('%encomenda(idEncomenda, (idEstafeta, idTransporte, idcliente), (data, prazoEntrega), (peso, volume, valor, estado), concelho).\n'), printEncomendaFormated), told.
 
 % INVARIANTES
 

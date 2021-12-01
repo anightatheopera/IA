@@ -1,1 +1,1 @@
-:- consult([knowledge,predicados,utils,menu,invariantes]).
+:- consult([transportes,estafetas,clientes,encomendas,predicados,utils,menu,invariantes]).
