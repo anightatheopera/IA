@@ -66,6 +66,16 @@ findDeliveriesIDE(IdE,DateI,Data,DateF,NEncs) :-
 	findall(Id, encomenda(Id,(IdE,_,_),(_,_),(_,_,_,entregue),_), List),
 	sum_list(List, NEncs).
 
+% remove Elemento de Lista
+delete(_, [], []):- !.
+delete(X, [X|L1], L2):- !, delete(X,L1,L2).
+delete(X, [H|L1], [H|L2]):- !,delete(X,L1,L2).
+
+find(_, [], []):- !.
+find(X, [X|L1], L2):- !, find(X,L1,L3), append(L3,[X],L2).
+find(_, L1, L):- !,find(_,L1,L).
+
+
 %FUNSHIT
 
 printEstafetasFormated:-    
@@ -90,11 +100,22 @@ saveConhecimento:-
         (tell('estafetas.pl'),write('%estafeta(idEstafeta, nome, [(idEncomenda, classificação)]).\n'), printEstafetasFormated), told,    
         (tell('encomendas.pl'),write('%encomenda(idEncomenda, (idEstafeta, idTransporte, idcliente), (data, prazoEntrega), (peso, volume, valor, estado), concelho).\n'), printEncomendaFormated), told.
 
+atualizacao_c(Id,L):-
+	cliente(Id,Nome,_),
+	involucao(cliente(Id,Nome,_)),
+	evolucao(cliente(Id,Nome,L)).
+
+atualizacao_e(Id,L):-
+	estafeta(Id,Nome,_),
+	involucao(estafeta(Id,Nome,_)),
+	evolucao(estafeta(Id,Nome,L)).
+
+
 % INVARIANTES
 
 % Evolucao
 teste([]).
-teste([R|LR]):- R, teste(LR).
+teste([_|LR]):- teste(LR).
 
 evolucao(Termo) :- 
     solucoes(Invariante,+Termo::Invariante, Lista),

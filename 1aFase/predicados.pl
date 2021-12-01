@@ -1,20 +1,60 @@
 :- consult([transportes,clientes,clientes,encomendas,utils]).
-:- dynamic checkState/3, checkTransport/4, checkValidade/4, max_on_snd/2, freqs/2, sumTuples/3, encomenda/5, estafeta/3, transporte/5, evolucao/1, involucao/1.
+:- dynamic checkState/3, checkTransport/4, checkValidade/4, max_on_snd/2, freqs/2, sumTuples/3, encomenda/5, estafeta/3, transporte/5, cliente/3, evolucao/1, involucao/1.
 
 %============================================================================================
 %                                       ADD/REMOVE
 
-add_estafeta(IdE,Nome,L) :- evolucao(estafeta(IdE,Nome,L)).
+add_estafeta(Nome,L) :-
+	findall(I,estafeta(I,_,_),Y),
+	max_list(Y,Id),
+	IdE is Id + 1,
+	evolucao(estafeta(IdE,Nome,L)).
 
-rem_estafeta(IdE) :- involucao(estafeta(IdE,_,_)).
+add_estafeta_id(Id,Nome,L) :-
+	evolucao(estafeta(Id,Nome,L)).
 
-add_cliente(IdC,Nome,L) :- evolucao(cliente(IdC,Nome,L)).
+rem_estafeta(IdE) :-
+	findall(IdEnc,estafeta(IdE,_,IdEnc),Pair),
+	find(IdEnc,Pair,Encomendas),
+	maplist(rem_encomenda,Encomendas),
+	involucao(estafeta(IdE,_,_)).
 
-rem_cliente(IdC) :- involucao(cliente(IdC,_,_)).
+add_cliente(Nome,L) :- 
+	findall(I,cliente(I,_,_),Y),
+	max_list(Y,Id),
+	IdC is Id + 1,
+	evolucao(cliente(IdC,Nome,L)).
 
-add_encomenda(IdEnc,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,Estado),Concelho) :- evolucao(encomenda(IdEnc,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,Estado),Concelho)).
+add_cliente_id(Id,Nome,L) :- 
+	evolucao(cliente(Id,Nome,L)).
 
-rem_encomenda(IdEnc) :- involucao(encomenda(IdEnc,_,_,_,_)).
+rem_cliente(IdC) :-
+	findall(IdEnc,cliente(IdC,_,IdEnc),Encomendas),
+	maplist(rem_encomenda,Encomendas),
+	involucao(cliente(IdC,_,_)).
+
+add_encomenda(IdE,IdC,Data,Prazo,Peso,Volume,Valor,Concelho) :-
+	findall(I,encomenda(I,_,_,_,_),Y),
+	findall(Est,estafeta(IdE,_,Est),Enco),
+	findall(Cli,cliente(IdC,_,Cli),Clie),
+	max_list(Y,Id),
+	IdEnc is Id + 1,
+	append(Clie,[IdEnc],EncCli),
+	append(Enco,[(IdEnc,3)],EncEst),
+	(5=<Peso -> IdT is 1; (20=< Peso -> IdT is 2 ; IdT is 3)),
+		evolucao(encomenda(IdEnc,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,pendente),Concelho)),
+		atualizacao_c(IdC,EncCli),
+		atualizacao_e(IdE,EncEst).
+
+rem_encomenda(IdEnc) :-
+	encomenda(IdEnc,(IdE,A,IdC),B,C,D),
+	estafeta(IdE,_,Scores),
+	cliente(IdC,_,Encomendas),
+	delete((IdEnc,_),Scores,ScoresU),
+	delete(IdEnc,Encomendas,EncomendasU),
+	atualizacao_c(IdC,EncomendasU),
+	atualizacao_e(IdE,ScoresU),
+	involucao(encomenda(IdEnc,(IdE,A,IdC),B,C,D)).
 
 %============================================================================================
 %                                       PREDICADOS
