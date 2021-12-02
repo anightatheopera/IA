@@ -4,29 +4,23 @@
 %============================================================================================
 %                                       ADD/REMOVE
 
-add_estafeta(Nome,L) :-
+add_estafeta(Nome) :-
 	findall(I,estafeta(I,_,_),Y),
 	max_list(Y,Id),
 	IdE is Id + 1,
-	evolucao(estafeta(IdE,Nome,L)).
-
-add_estafeta_id(Id,Nome,L) :-
-	evolucao(estafeta(Id,Nome,L)).
+	evolucao(estafeta(IdE,Nome,[])).
 
 rem_estafeta(IdE) :-
-	findall(IdEnc,estafeta(IdE,_,IdEnc),Pair),
-	find(IdEnc,Pair,Encomendas),
-	maplist(rem_encomenda,Encomendas),
+	estafeta(IdE,_,IdEnc),
+	maplist(arg(1),IdEnc,Encomendas),
+	maplist(atualizacao_encomenda(0),Encomendas),
 	involucao(estafeta(IdE,_,_)).
 
-add_cliente(Nome,L) :- 
+add_cliente(Nome) :- 
 	findall(I,cliente(I,_,_),Y),
 	max_list(Y,Id),
 	IdC is Id + 1,
-	evolucao(cliente(IdC,Nome,L)).
-
-add_cliente_id(Id,Nome,L) :- 
-	evolucao(cliente(Id,Nome,L)).
+	evolucao(cliente(IdC,Nome,[])).
 
 rem_cliente(IdC) :-
 	findall(IdEnc,cliente(IdC,_,IdEnc),Encomendas),

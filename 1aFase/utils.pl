@@ -99,12 +99,16 @@ atualizacao_e(Id,L):-
 	involucao(estafeta(Id,Nome,_)),
 	evolucao(estafeta(Id,Nome,L)).
 
+atualizacao_encomenda(Id,IdE):-
+	encomenda(IdE,(IdEst,IdT,IdC),D,E,P),
+	remocao(encomenda(IdE,(IdEst,IdT,IdC),D,E,P)),
+	insercao(encomenda(IdE,(Id,IdT,IdC),D,E,P)).
 
 % INVARIANTES
 
 % Evolucao
 teste([]).
-teste([_|LR]):- teste(LR).
+teste([X|LR]):-X,teste(LR).
 
 evolucao(Termo) :- 
     solucoes(Invariante,+Termo::Invariante, Lista),
