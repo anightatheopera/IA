@@ -55,17 +55,6 @@ checkTransport([IdTrans|T],B,M,C):-
 	checkTransport(T,B1,M1,C1),
 	(IdTrans = 1 -> B is B1 + 1,M is M1, C is C1;(IdTrans = 2 -> M is M1 + 1, B is B1, C is C1;C is C1 + 1, B is B1, M is M1)).
 
-% Date tester
-checkDate(Di/Mi/Yi,Df/Mf/Yf,D/M/Y) :-
-	(Y<2022, Y>1900, M<13, M>0,D<32, D>0->
-		(((Yi<Y, Y<Yf, Mi=<M, M=<Mf);(Y==Yi, Mi=<M);(Y==Yf, M=<Mf);(Y==Yi, Mi==M, Di=<D);(Y==Yf, M==Mf, D=<Df)))).
-
-% lista de todas as encomendas de um determinado estafeta
-findDeliveriesIDE(IdE,DateI,Data,DateF,NEncs) :-
-	checkDate(DateI,DateF,Data),
-	findall(Id, encomenda(Id,(IdE,_,_),(_,_),(_,_,_,entregue),_), List),
-	sum_list(List, NEncs).
-
 % remove Elemento de Lista
 delete(_, [], []):- !.
 delete(X, [X|L1], L2):- !, delete(X,L1,L2).
