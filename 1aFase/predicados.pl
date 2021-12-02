@@ -23,7 +23,7 @@ add_cliente(Nome) :-
 	evolucao(cliente(IdC,Nome,[])).
 
 rem_cliente(IdC) :-
-	findall(IdEnc,cliente(IdC,_,IdEnc),Encomendas),
+	cliente(IdC,_,Encomendas),
 	maplist(rem_encomenda,Encomendas),
 	involucao(cliente(IdC,_,_)).
 
