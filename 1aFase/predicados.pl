@@ -1,4 +1,4 @@
-:- consult([transportes,clientes,clientes,encomendas,utils]).
+:- consult([transportes,clientes,estafetas,encomendas,utils]).
 :- dynamic checkState/3, checkTransport/4, checkValidade/4, max_on_snd/2, freqs/2, sumTuples/3, encomenda/5, estafeta/3, transporte/5, cliente/3, evolucao/1, involucao/1.
 
 %============================================================================================
@@ -26,15 +26,15 @@ rem_cliente(IdC) :-
 	cliente(IdC,_,Encomendas),
 	maplist(rem_encomenda,Encomendas),
 	involucao(cliente(IdC,_,_)).
-
+	
 add_encomenda(IdE,IdC,Data,Prazo,Peso,Volume,Valor,Codigo,Postal) :-
 	findall(I,encomenda(I,_,_,_,_),Y),
-	findall(Est,estafeta(IdE,_,Est),Enco),
-	findall(Cli,cliente(IdC,_,Cli),Clie),
+	estafeta(IdE,_,Enco),
+	cliente(IdC,_,Clie),
 	max_list(Y,Id),
 	IdEnc is Id + 1,
 	append(Clie,[IdEnc],EncCli),
-	append(Enco,[(IdEnc,3)],EncEst),
+	append(Enco,[(IdEnc,2)],EncEst),
 	(5=<Peso -> IdT is 1; (20=< Peso -> IdT is 2 ; IdT is 3)),
 		evolucao(encomenda(IdEnc,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,pendente),(Codigo,Postal))),
 		atualizacao_c(IdC,EncCli),

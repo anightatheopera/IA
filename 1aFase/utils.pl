@@ -76,9 +76,9 @@ printClientesFormated:-
         maplist(format('cliente(~q).\n'),Y).
         
 printEncomendaFormated:-    
-        findall((A,B,C,D,E),encomenda(A,B,C,D,E),Y),    
-        maplist(format('encomenda(~q).\n'),Y).    
-     
+        forall(encomenda(A,(B,C,D),(E,F),(G,H,I,J),(K,L)),format('encomenda(~d,(~d,~d,~d),(~w,~d),(~2f,~2f,~d,~w),(~d,~d)).\n',[A,B,C,D,E,F,G,H,I,J,K,L])).
+
+
 printTransportesFormated:-    
         findall((A,B,C,D,E),transporte(A,B,C,D,E),Y),    
         maplist(format('transporte(~q).\n'),Y).    

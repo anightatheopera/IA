@@ -33,6 +33,6 @@
 
 % Não permitir a INSERÇÃO de conhecimento repetido pelo id 
 +encomenda( Id, _, _, _, _ ) :: (
-                                    solucoes( ID, encomenda( ID, _, _, _, _ ), R ),
+                                    solucoes( ID, encomenda( Id, _, _, _, ID ), R ),
                                     comprimento( R, 1 )
                                 ).
