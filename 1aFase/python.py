@@ -39,7 +39,7 @@ def open_encomendas():
             data = i.replace('(',',',1).replace('(', '').replace(')', '')
             content = data.split(",",1)
             enc = content[1].split(',')
-            encomendas.append([enc[0].replace(' ',''),enc[1].replace(' ',''),enc[2].replace(' ',''),enc[3].replace(' ',''),enc[4].replace(' ',''),enc[5].replace(' ',''),enc[6].replace(' ',''),enc[7].replace(' ',''),enc[8].replace(' ',''),enc[9].replace(' ',''),enc[10].strip(".\n")])
+            encomendas.append([enc[0].replace(' ',''),enc[1].replace(' ',''),enc[2].replace(' ',''),enc[3].replace(' ',''),enc[4].replace(' ',''),enc[5].replace(' ',''),enc[6].replace(' ',''),enc[7].replace(' ',''),enc[8].replace(' ',''),enc[9].replace(' ',''),enc[10].replace(' ',''),enc[11].replace(' ','').strip(".\n")])
         encomendas_grouped = [encomendas[25*i:(25*i)+25] for i in range(501)]
     return encomendas_grouped
 
@@ -59,7 +59,7 @@ def main():
                 print("-------------------------------------------------------- Encomendas --------------------------------------------------------")
                 for row in page:
                     print("+---------------------------------------------------------------------------------------------------------------------------")
-                    print("|   encomenda("+row[0]+",("+row[1]+','+row[2]+','+row[3]+"),("+row[4]+','+row[5]+"),("+row[6]+','+row[7]+','+row[8]+','+row[9]+"),"+row[10]+").")
+                    print("|   encomenda("+row[0]+",("+row[1]+','+row[2]+','+row[3]+"),("+row[4]+','+row[5]+"),("+row[6]+','+row[7]+','+row[8]+','+row[9]+"),("+row[10]+','+row[11]+")).")
                 print("+---------------------------------------------------------------------------------------------------------------------------")
                 a = input("Página {} de 200   (exit para sair)\n Ir para > ".format(x+1))
                 if (a == "exit"):

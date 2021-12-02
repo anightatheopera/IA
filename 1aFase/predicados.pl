@@ -33,7 +33,7 @@ rem_cliente(IdC) :-
 	maplist(rem_encomenda,Encomendas),
 	involucao(cliente(IdC,_,_)).
 
-add_encomenda(IdE,IdC,Data,Prazo,Peso,Volume,Valor,Concelho) :-
+add_encomenda(IdE,IdC,Data,Prazo,Peso,Volume,Valor,Codigo,Postal) :-
 	findall(I,encomenda(I,_,_,_,_),Y),
 	findall(Est,estafeta(IdE,_,Est),Enco),
 	findall(Cli,cliente(IdC,_,Cli),Clie),
@@ -42,7 +42,7 @@ add_encomenda(IdE,IdC,Data,Prazo,Peso,Volume,Valor,Concelho) :-
 	append(Clie,[IdEnc],EncCli),
 	append(Enco,[(IdEnc,3)],EncEst),
 	(5=<Peso -> IdT is 1; (20=< Peso -> IdT is 2 ; IdT is 3)),
-		evolucao(encomenda(IdEnc,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,pendente),Concelho)),
+		evolucao(encomenda(IdEnc,(IdE,IdT,IdC),(Data,Prazo),(Peso,Volume,Valor,pendente),(Codigo,Postal))),
 		atualizacao_c(IdC,EncCli),
 		atualizacao_e(IdE,EncEst).
 
@@ -85,7 +85,7 @@ valordia(Data, TotalFatorado) :-
 
 % predicado 5
 freqZona(Res):-
-	findall((Concelho),encomenda(_,_,_,(_,_,_,entregue),Concelho),L),
+	findall((Concelho),encomenda(_,_,_,(_,_,_,entregue),(Concelho,_)),L),
 	freqs(L,Res).
 
 % predicado 6

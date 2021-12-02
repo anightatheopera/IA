@@ -76,7 +76,7 @@ find(X, [X|L1], L2):- !, find(X,L1,L3), append(L3,[X],L2).
 find(_, L1, L):- !,find(_,L1,L).
 
 
-%FUNSHIT
+% Print Knowledge base to files (Overwrite them)
 
 printEstafetasFormated:-    
         findall((A,B,C),estafeta(A,B,C),Y),    
@@ -98,7 +98,7 @@ saveConhecimento:-
         (tell('transportes.pl'),write('%transporte(idTransporte,nome, pesoMáximo, velocidadeMédia, nivelEcológico).\n'), printTransportesFormated), told,    
         (tell('clientes.pl'),write('%cliente(idCliente,nome,[encomendas]).\n'), printClientesFormated), told,    
         (tell('estafetas.pl'),write('%estafeta(idEstafeta, nome, [(idEncomenda, classificação)]).\n'), printEstafetasFormated), told,    
-        (tell('encomendas.pl'),write('%encomenda(idEncomenda, (idEstafeta, idTransporte, idcliente), (data, prazoEntrega), (peso, volume, valor, estado), concelho).\n'), printEncomendaFormated), told.
+        (tell('encomendas.pl'),write('%encomenda(idEncomenda, (idEstafeta, idTransporte, idcliente), (data, prazoEntrega), (peso, volume, valor, estado), (codigo, postal)).\n'), printEncomendaFormated), told.
 
 atualizacao_c(Id,L):-
 	cliente(Id,Nome,_),
@@ -132,7 +132,7 @@ involucao(Termo) :- Termo,
                     teste(Lista).
 
 remocao(Termo) :- retract(Termo).
-remocao(Termo) :- assert(Termo),!,fail.
+remocao(Termo) :- assertz(Termo),!,fail.
 
 solucoes(X,Y,Z) :- findall(X,Y,Z).
 
