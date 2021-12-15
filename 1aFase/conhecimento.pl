@@ -13,7 +13,7 @@ cliente(3, 'Ermelinda Ribeiro',[5,7]).
 
 
 %encomenda(IdEncomenda, (IdEstafeta, idTransporte, idcliente), (Data, prazoEntrega), (Peso, Volume, Valor, Estado), (codigo, postal))
-% estado : entregue | pendente | cancelada
+%estado : entregue | pendente | cancelada
 
 encomenda(0, (3,2,2), (19/01/2021,72), (16,2,25,pendente), (4700,691)).
 encomenda(1, (1,3,1), (14/04/2019,41), (85.87,75,48,pendente),(1234,214)).
