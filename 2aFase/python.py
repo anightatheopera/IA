@@ -106,7 +106,7 @@ def make_graph(nodesL,graphMine):
     return a
         
 def write_grafo(s):
-    with open('graphic.pl', 'w') as f:
+    with open('graph.pl', 'w') as f:
         sys.stdout = f # Change the standard output to the file we created.
         print(s)
         sys.stdout = original_stdout
