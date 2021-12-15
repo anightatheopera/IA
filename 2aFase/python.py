@@ -108,6 +108,7 @@ def make_graph(nodesL,graphMine):
 def write_grafo(s):
     with open('graph.pl', 'w') as f:
         sys.stdout = f # Change the standard output to the file we created.
+        print("%grafo([Nodos],[aresta(Src,Dest,Cost)]).")
         print(s)
         sys.stdout = original_stdout
 
