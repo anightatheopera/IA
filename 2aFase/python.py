@@ -74,6 +74,21 @@ def grafo():
 def nodes(dic,row):
     add(dic,row[11],int(row[0]))
 
+def write_to_file(nodesL,graphMine):
+    with open('nodos.pl', 'w') as f:
+        sys.stdout = f # Change the standard output to the file we created.
+        print("%nodo(Nodo,Encomendas).")
+        for line in nodesL:
+            line.printnode()
+        sys.stdout = original_stdout # Reset the standard output to its original value
+    with open('arestas.pl', 'w') as f:
+        sys.stdout = f # Change the standard output to the file we created.
+        print("\n%aresta(Src,Dest,Cost).")
+        for line in graphMine:
+            line.printpath()
+        sys.stdout = original_stdout # Reset the standard output to its original value
+
+
 def main():
     enc = open_encomendas()
     post = []
@@ -87,20 +102,10 @@ def main():
 
     for row in H.edges():
         graphMine.append(Path(row[0],row[1]))
-    ####visualize(H)
+    ##visualize(H)
+    write_to_file(nodesL,graphMine)
     
-    with open('nodos.pl', 'w') as f:
-        sys.stdout = f # Change the standard output to the file we created.
-        print("%nodo(Nodo,Encomendas).")
-        for line in nodesL:
-            line.printnode()
-        sys.stdout = original_stdout # Reset the standard output to its original value
-    with open('arestas.pl', 'w') as f:
-        sys.stdout = f # Change the standard output to the file we created.
-        print("\n%aresta(Src,Dest,Cost).")
-        for line in graphMine:
-            line.printpath()
-        sys.stdout = original_stdout # Reset the standard output to its original value
+
 
 if __name__ == "__main__":
     shell()
