@@ -30,8 +30,11 @@ class Path:
         self.source = Ni
         self.dest = Nf
         self.cost = random.randint(1,100)
+    def write_path(self):
+        return("aresta(" + str(self.source) + "," + str(self.dest) + ","+ str(self.cost) + "),")
     def printpath(self):
         print("aresta(" + str(self.source) + "," + str(self.dest) + ","+ str(self.cost) + ").")
+
 
 def add(dic,key,value):
     dic[key].append(value)
@@ -42,6 +45,8 @@ class Node:
         self.list = encomenda
     def addEnc(self,encomenda):
         self.list.append(encomenda)
+    def get_where(self):
+        return(str(self.code))
     def printnode(self):
         print("node(" + str(self.code) + "," + str(self.list) + ").")
 
@@ -88,6 +93,23 @@ def write_to_file(nodesL,graphMine):
             line.printpath()
         sys.stdout = original_stdout # Reset the standard output to its original value
 
+def make_graph(nodesL,graphMine):
+    a = "grafo(["
+    for row in nodesL:
+        a = a + row.get_where() + ","
+    a = a[:-1]
+    a = a + "],["
+    for row in graphMine:
+        a = a + row.write_path()
+    a = a[:-1]
+    a = a+ "])."
+    return a
+        
+def write_grafo(s):
+    with open('graphic.pl', 'w') as f:
+        sys.stdout = f # Change the standard output to the file we created.
+        print(s)
+        sys.stdout = original_stdout
 
 def main():
     enc = open_encomendas()
@@ -104,6 +126,7 @@ def main():
         graphMine.append(Path(row[0],row[1]))
     ##visualize(H)
     write_to_file(nodesL,graphMine)
+    write_grafo(make_graph(nodesL,graphMine))
     
 
 
