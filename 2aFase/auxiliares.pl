@@ -1,39 +1,29 @@
 :- consult([transportes,clientes,estafetas,encomendas,arestas]).
 
 %coisas do predicado 4
-bicicleta(Kgs,Vf) :- 
+calculaVelF(Kgs,(bicicleta,Vf)) :-
     Kgs<5,
     Vf is 10-(Kgs*0.7).
-mota(Kgs,Vf) :-  
+calculaVelF(Kgs,(mota,Vf)) :- 
     Kgs<20,
     Vf is 35-(Kgs*0.5).
-carro(Kgs,Vf) :-  Vf is 25-(Kgs*0.1).
+calculaVelF(Kgs,(carro,Vf)) :-
+    Kgs<100,
+    Vf is 25-(Kgs*0.1).
 
-atrasar(IdTrans,PesoEnc,Vf) :-
-    transporte(IdTrans,bicicleta,_,_,_),
-    bicicleta(PesoEnc,Vf).
-atrasar(IdTrans,PesoEnc,Vf) :-
-    transporte(IdTrans,mota,_,_,_),
-    mota(PesoEnc,Vf).
-atrasar(IdTrans,PesoEnc,Vf) :-
-    transporte(IdTrans,carro,_,_,_),
-    carro(PesoEnc,Vf).
+%maisEficiente([],_,_,_).
+maisEficiente(Dest,PesoEnc,TempoRest,(Veiculo,(Caminho,DistMin))) :-
+    circuito(Dest,Caminhos),
+    min_on_snd(Caminhos,(Caminho,DistMin)),
+    calculaVelF(PesoEnc,(Veiculo,Vel)),
+    VMin is DistMin/TempoRest,
+    VMin=<Vel.
 
-maisEcologico(Peso,Vel,bicicleta) :-
-    Vel=<10,
-    Peso<5.
-maisEcologico(Peso,Vel,mota) :- 
-    Vel=<35,
-    Vel>10, 
-    Peso<20.
-maisEcologico(Peso,Vel,carro) :-
-    Vel=<25,
-    Peso<100.
-
-maisEficiente(Part,Cheg,PesoEnc,TempoRest,Veiculo) :-
-    aresta(Part,Cheg,Perc),
-    Min is Perc/TempoRest,
-    maisEcologico(PesoEnc,Min,Veiculo).
+min_on_snd([H], H).
+min_on_snd([(A0,N0)|T], Res) :-
+    min_on_snd(T, (A1,N1)),
+    Min is min(N0, N1),
+    (Min =:= N0 -> Res = (A0,N0); Res = (A1,N1)).
 %fim de coisas do predicado 4
 
 

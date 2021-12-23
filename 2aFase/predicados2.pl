@@ -16,6 +16,12 @@ adjacentes(Nodo,Adjs) :-
 
 
 %predicado 4:
+maisEficiente(Dest,PesoEnc,TempoRest,(Veiculo,(Caminho,DistMin))) :-
+    circuito(Dest,Caminhos),
+    min_on_snd(Caminhos,(Caminho,DistMin)),
+    calculaVelF(PesoEnc,(Veiculo,Vel)),
+    VMin is DistMin/TempoRest,
+    VMin=<Vel.
 
 
 %predicado 5:

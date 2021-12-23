@@ -33,3 +33,9 @@ aresta(17,21,4).
 aresta(17,22,8).
 aresta(21,23,10).
 aresta(22,23,15).
+aresta(0,69,3).
+aresta(69,70,4).
+aresta(70,100,30).
+aresta(0,70,3).
+aresta(70,90,2).
+aresta(90,100,1).
