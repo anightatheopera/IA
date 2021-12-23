@@ -1,5 +1,5 @@
 
-%aresta(Src,Dest,Cost).
+%aresta(Src,Dest,Distancia).
 aresta(0,8,6).
 aresta(0,20,14).
 aresta(0,22,11).

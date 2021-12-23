@@ -29,12 +29,13 @@ move([Node|Path]/Cost/_, [NextNode,Node|Path]/NewCost/Est) :-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Inefficient Search%
 
-caminho(A,B,P,C):-caminho1(A,[B],P,C).
+caminho(A,B,P,C):- caminho1(A,[B],P,C).
 caminho1(A,[A|P1],[A|P1],0).
-caminho1(A,[Y|P1],P,C):- adjacent(X,Y,C1), 
-                       not(member(X,[Y|P1])), 
-		       caminho1(A,[X,Y|P1],P,C2),
-		       C is 0+C1+C2.
+caminho1(A,[Y|P1],P,C):- 
+	adjacent(X,Y,C1), 
+    not(member(X,[Y|P1])), 
+	caminho1(A,[X,Y|P1],P,C2),
+	C is 0+C1+C2.
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %DepthFirst Search%
