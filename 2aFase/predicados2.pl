@@ -1,8 +1,8 @@
-:- consult([transportes,clientes,estafetas,encomendas,arestas,auxiliares]).
+:- consult([transportes,clientes,estafetas,encomendas,arestas,nodos,estimativas,auxiliares,algoritmos]).
 
 %predicado 1:
-circuito(Nodo,Paths):-
-
+circuito(Node,Paths):-
+	solveAllDepthFirst(Node,Paths).
 
 
 %predicado 2 acho eu
