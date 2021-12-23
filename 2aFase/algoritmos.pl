@@ -166,7 +166,7 @@ solveAllDepthFirst(Node,L):-
 
 %Argumentos
 %Node -> Onde quero ir.
-%Cam -> Caminho,Custo de 0 ate Node.
+%Cam -> Caminho/Custo de 0 ate Node.
 solveAstar(Node,Cam):-
 	addDest(Node),
 	origem(NO),
@@ -178,7 +178,7 @@ solveAstar(Node,Cam):-
 
 %Argumentos
 %Node -> Onde quero ir.
-%Cam -> Caminho,Custo de 0 ate Node.
+%Cam -> Caminho/Custo de 0 ate Node.
 solveGreedy(Node,Cam):-
 	addDest(Node),
 	origem(NO),
