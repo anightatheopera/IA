@@ -133,8 +133,8 @@ def main():
 
     for row in H.edges():
         graphMine.append(Path(row[0],row[1]))
+    save_files(nodesL,graphMine)
     visualize(H)
-    #save_files(nodesL,graphMine)
 
 if __name__ == "__main__":
     shell()
