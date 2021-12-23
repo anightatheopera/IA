@@ -35,3 +35,32 @@ maisEficiente(Part,Cheg,PesoEnc,TempoRest,Veiculo) :-
     Min is Perc/TempoRest,
     maisEcologico(PesoEnc,Min,Veiculo).
 %fim de coisas do predicado 4
+
+
+
+%STUFF
+escrever([]).
+escrever([H|T]) :-
+	write(H), write("\n"),
+	escrever(T).
+
+nao( Questao ) :-
+    Questao, !, fail.
+nao( Questao ).
+
+
+appendToList([],L,L).
+appendToList([H|T],L,[H|Z]):- appendToList(T,L,Z).
+appendToListS([],L).
+appendToListS(R,[R|L]).
+
+inverteLista([],Z,Z).
+inverteLista([H|T],Z,Acc) :- inverteLista(T,Z,[H|Acc]).
+
+
+inverso(Xs, Ys):-
+	inverso(Xs, [], Ys).
+
+inverso([], Xs, Xs).
+inverso([X|Xs],Ys, Zs):-
+	inverso(Xs, [X|Ys], Zs).
