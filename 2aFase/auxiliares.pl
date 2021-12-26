@@ -1,4 +1,5 @@
 :- consult([transportes,clientes,estafetas,encomendas,arestas]).
+:- dynamic aresta/3.
 
 %coisas do predicado 4
 calculaVelF(Kgs,(bicicleta,Vf)) :-
@@ -26,7 +27,18 @@ min_on_snd([(A0,N0)|T], Res) :-
     (Min =:= N0 -> Res = (A0,N0); Res = (A1,N1)).
 %fim de coisas do predicado 4
 
+% inicio de coisas do predicado 5
 
+getDist(Node, X) :- aresta(Node, X, _).
+
+getDest(Node, Y) :- aresta(Node, _, Y).
+
+somDist(Dist1, Dist2, Res) :- Res is Dist1 + Dist2.
+
+distancia([_], 0).
+distancia()
+
+% inicio de coisas do predicado 5
 
 %STUFF
 escrever([]).

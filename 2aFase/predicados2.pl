@@ -25,6 +25,8 @@ maisEficiente(Dest,PesoEnc,TempoRest,(Veiculo,(Caminho,DistMin))) :-
 
 
 %predicado 5:
-
+menorDist(NodoInicial, NodoFinal, Res) :- 
+    circuito(NodoFinal, Res), 
+    menorPath(NodoInicial,NodoFinal,X).
 
 %predicado 6:
