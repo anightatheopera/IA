@@ -26,6 +26,9 @@ move([Node|Path]/Cost/_, [NextNode,Node|Path]/NewCost/Est) :-
 	NewCost is Cost + StepCost,
 	estimativa(NextNode, Est).
 
+merge_list([],L,L ).
+merge_list([H|T],L,[H|M]):-
+    merge_list(T,L,M).
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Inefficient Search%
 
@@ -55,6 +58,11 @@ depthfirst_cyclefree(Visited, Node, Path, Cost) :-
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Iterative Deepening Search%
+
+reversP(O,Node,Cam,Cost):-
+	path(O, Node, RevPath,Cost),
+	reverse(RevPath, Cam).
+
 
 path(Node, Node, [Node],0).
 path(FirstNode, LastNode, [LastNode|Path],Cost) :-
@@ -125,7 +133,6 @@ expandGreedy(Caminho,ExpCaminhos) :-
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 
-
 %%Search Algorithms
 
 %Inefficient Search%
@@ -134,9 +141,17 @@ expandGreedy(Caminho,ExpCaminhos) :-
 % Node -> Onde quero ir.
 % Cam -> Caminho de 0 ate Node
 % Cost -> Custo de 0 ate Node.
-%
-% Observacoes, Nao e possivel fazer findall porque entra em loop infinito pois a solucao e sempre a mesma.
-solveInefeciente(Node,Cam,Cost):-addDest(Node),origem(G),caminho(G,Node,Cam,Cost),remDest(Node).
+solveInefeciente(Node,Cam,Cost):-
+	addDest(Node),
+	origem(G),
+	caminho(G,Node,Cam,Cost),
+	remDest(Node).
+
+solveAllInefeciente(Node,L):-
+	addDest(Node),
+	origem(G),
+	findall((P,C),caminho(G,Node,P,C),L),
+	remDest(Node).
 
 %Iterative Deepening Search%
 
@@ -153,15 +168,28 @@ solveIterativeDeepening(Node,Cam,Cost) :-
 	reverse(RevPath, Cam),
 	remDest(Node).
 
+solveAllIterativeDeepening(Node,L) :-
+	addDest(Node),
+	origem(O),
+	findall((P,C),reversP(O,Node,P,C),L),
+	remDest(Node).
+
 %DepthFirst Search%
 
 % Argumentos
 % Node -> Onde quero ir.
-% L -> Lista de (Caminho,Custo) de 0 ate Node.
+% Path -> Caminho de 0 ate Node.
+% Cost -> Custo de 0 ate Node
+solveDepthFirst(Node,Path,Cost):-
+	addDest(Node),
+	solve_depthfirst_cyclefree(Path,Cost),
+	remDest(Node).
+
 solveAllDepthFirst(Node,L):-
 	addDest(Node),
 	findall((Path,Cost),solve_depthfirst_cyclefree(Path,Cost),L),
 	remDest(Node).
+
 
 %Astar Search%
 
@@ -174,6 +202,11 @@ solveAstar(Node,Cam):-
 	solve_astar(NO,Cam),
 	remDest(Node).
 
+solveAllAstar(Node,L):-
+	addDest(Node),
+	origem(NO),
+	findall(Cam,solve_astar(NO,Cam),L),
+	remDest(Node).
 
 %Greedy Search%
 
@@ -185,3 +218,29 @@ solveGreedy(Node,Cam):-
 	origem(NO),
 	solve_greedy(NO,Cam),
 	remDest(Node).
+
+solveAllGreedy(Node,L):-
+	addDest(Node),
+	origem(NO),
+	findall(Cam,solve_greedy(NO,Cam),L),
+	remDest(Node).
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% SolveAll Algorithm
+% Merge All outputs to a list
+
+solveAll(Node,L):-
+	addDest(Node),
+	origem(O),
+	findall((P/C),caminho(O,Node,P,C),IN),
+	reversP(O,Node,P1,C1),
+	ID = [P1/C1],
+	findall((P2/C2),solve_depthfirst_cyclefree(P2,C2),DF),
+	findall(Cam1,solve_astar(O,Cam1),AS),
+	findall(Cam2,solve_greedy(O,Cam2),GD),
+	merge_list(IN,ID,O1),
+	merge_list(DF,AS,O2),
+	merge_list(O1,GD,O3),
+	merge_list(O2,O3,L),
+	remDest(Node).
+
