@@ -1,4 +1,5 @@
 :- consult([transportes,clientes,estafetas,encomendas,arestas,nodos,estimativas,auxiliares,algoritmos]).
+:- dynamic min_on_snd/2.
 
 %predicado 1:
 circuito(Node,Paths):-
@@ -25,8 +26,8 @@ maisEficiente(Dest,PesoEnc,TempoRest,(Veiculo,(Caminho,DistMin))) :-
 
 
 %predicado 5:
-menorDist(NodoInicial, NodoFinal, Res) :- 
-    circuito(NodoFinal, Res), 
-    menorPath(NodoInicial,NodoFinal,X).
+menorDist(NodoFinal, Res) :- 
+    circuito(NodoFinal, X), 
+    min_on_snd(X,Res).
 
 %predicado 6:

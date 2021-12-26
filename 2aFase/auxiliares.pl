@@ -21,24 +21,11 @@ maisEficiente(Dest,PesoEnc,TempoRest,(Veiculo,(Caminho,DistMin))) :-
     VMin=<Vel.
 
 min_on_snd([H], H).
-min_on_snd([(A0,N0)|T], Res) :-
-    min_on_snd(T, (A1,N1)),
+min_on_snd([(A0/N0)|T], Res) :-
+    min_on_snd(T, (A1/N1)),
     Min is min(N0, N1),
-    (Min =:= N0 -> Res = (A0,N0); Res = (A1,N1)).
+    (Min =:= N0 -> Res = (A0/N0); Res = (A1/N1)).
 %fim de coisas do predicado 4
-
-% inicio de coisas do predicado 5
-
-getDist(Node, X) :- aresta(Node, X, _).
-
-getDest(Node, Y) :- aresta(Node, _, Y).
-
-somDist(Dist1, Dist2, Res) :- Res is Dist1 + Dist2.
-
-distancia([_], 0).
-distancia()
-
-% inicio de coisas do predicado 5
 
 %STUFF
 escrever([]).
