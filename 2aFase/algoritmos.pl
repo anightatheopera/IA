@@ -1,4 +1,4 @@
-:- consult([nodos,estimativas,arestas,graph]).
+:- consult([nodos,encomendas,estimativas,arestas,graph]).
 addDest(Node):-
 	insercao(destino(Node)).
 
@@ -29,6 +29,23 @@ move([Node|Path]/Cost/_, [NextNode,Node|Path]/NewCost/Est) :-
 merge_list([],L,L ).
 merge_list([H|T],L,[H|M]):-
     merge_list(T,L,M).
+
+%------- Query 3 ------------
+
+findInfoEnc(IdEnc,Weight, Volume) :-
+	encomenda(IdEnc,_,_,(Weight,Volume,_,_),_).
+
+move_cyclefree_NWV(Visited, Node, NextNode, (NumEncs, Weight, Volume)) :-
+	adjacent(Node, NextNode, _),
+	\+ member(NextNode, Visited),
+	node(Node, L),
+	length(L, NumEncs),
+	maplist(findInfoEnc, L,LW,LV),
+	sumlist(LW,Weight),
+	sumlist(LV,Volume).
+
+%---------------------------------
+
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Inefficient Search%
 
@@ -55,6 +72,27 @@ depthfirst_cyclefree(Visited, Node, Path, Cost) :-
 	move_cyclefree(Visited, Node, NextNode, C1),
 	depthfirst_cyclefree([NextNode|Visited], NextNode, Path, C2),
 	Cost is C1+C2.
+
+%-------- Query 3--------------------
+
+solve_depthfirst_cyclefree_NWV(Path,(NumEncs, Weight, Volume)) :-
+	origem(Node),
+	depthfirst_cyclefree_NWV([Node], Node, RevPath, (NumEncs, Weight, Volume)),
+	reverse(RevPath, Path).
+
+depthfirst_cyclefree_NWV(Visited, Node, Visited, (NumEncs,0,0)) :-
+	destino(Node),
+	node(Node,L),
+	length(L, NumEncs).
+	
+depthfirst_cyclefree_NWV(Visited, Node, Path, (NumEncs, Weight, Volume)) :-
+	move_cyclefree_NWV(Visited, Node, NextNode, (NumEncs1, W1, V1)),
+	depthfirst_cyclefree_NWV([NextNode|Visited], NextNode, Path, (NumEncs2, W2, V2)),
+	NumEncs is NumEncs1+NumEncs2,
+	Weight is W1+W2,
+	Volume is V1+V2.
+
+%-------------------------------------------
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Iterative Deepening Search%
@@ -243,4 +281,47 @@ solveAll(Node,L):-
 	merge_list(O1,GD,O3),
 	merge_list(O2,O3,L),
 	remDest(Node).
+
+%--------------------------------- - - - - - - -- -  -- - - - - - - - - -  
+% QuickSort Algorithm
+
+%quicksort([(_,Num,_,_)|Xs],Ys) :-
+%	partition(Xs,Num,Left,Right),
+%	quicksort(Left,Ls),
+%	quicksort(Right,Rs),
+%	append1(Ls,[Num|Rs],Ys).
+%quicksort([],[]).
+%  
+%partition([(_,Num,_,_)|Xs],Y,[(_,Num,_,_)|Ls],Rs) :-
+%	Num =< Y,
+%	partition(Xs,Y,Ls,Rs).
+%partition([(_,Num,_,_)|Xs],Y,Ls,[(_,Num,_,_)|Rs]) :-
+%	Num > Y, 
+%	partition(Xs,Y,Ls,Rs).
+%partition([],_,[],[]).
+%  
+%append1([],Ys,Ys).
+%append1([X|Xs],Ys,[X|Zs]) :- append1(Xs,Ys,Zs).
+
+%pivot(_, [], [], []).
+%pivot(Pivot, [(_,Head,_,_)|Tail], [(_,Head,_,_)|LessOrEqualThan], GreaterThan) :- Pivot < Head, pivot(Pivot, Tail, LessOrEqualThan, GreaterThan). 
+%pivot(Pivot, [(_,Head,_,_)|Tail], LessOrEqualThan, [(_,Head,_,_)|GreaterThan]) :- pivot(Pivot, Tail, LessOrEqualThan, GreaterThan).
+%
+%quicksort([], []).
+%quicksort([(_,Head,_,_)|Tail], Sorted) :- pivot((_,Head,_,_), Tail, List1, List2), quicksort(List1, SortedList1), quicksort(List2, SortedList2), append(SortedList1, [(_,Head,_,_)|SortedList2], Sorted).
+
+
+%--------------------------------- - - - - - - - - - -  -  -  -  -   -
+% SolveAll Algorithm
+% Merge All outputs to a list
+
+solveAllDepthFirst_NwV1(Node,L):-
+	addDest(Node),                                                        
+	findall((Path,N,W,V),solve_depthfirst_cyclefree_NWV(Path,(N,W,V)),L),                                            
+	remDest(Node).                                                        
+											   
+solveAllDepthFirst_NwV(Res):-
+	findall(N,node(N,_),Ln),
+	maplist(solveAllDepthFirst_NwV1,Ln,Res).
+	%quicksort(L,Res).
 
