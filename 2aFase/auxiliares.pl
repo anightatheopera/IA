@@ -12,14 +12,6 @@ calculaVelF(Kgs,(carro,Vf)) :-
     Kgs<100,
     Vf is 25-(Kgs*0.1).
 
-%maisEficiente([],_,_,_).
-maisEficiente(Dest,PesoEnc,TempoRest,(Veiculo,(Caminho,DistMin))) :-
-    circuito(Dest,Caminhos),
-    min_on_snd(Caminhos,(Caminho,DistMin)),
-    calculaVelF(PesoEnc,(Veiculo,Vel)),
-    VMin is DistMin/TempoRest,
-    VMin=<Vel.
-
 min_on_snd([H], H).
 min_on_snd([(A0/N0)|T], Res) :-
     min_on_snd(T, (A1/N1)),
