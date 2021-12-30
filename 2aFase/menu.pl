@@ -1,10 +1,10 @@
-:- consult([transportes,clientes,estafetas,encomendas,arestas,nodos,estimativas,auxiliares,algoritmos,predicados2]).
+:- consult([graph,transportes,clientes,estafetas,encomendas,arestas,nodos,estimativas,auxiliares,algoritmos,predicados2]).
 :- dynamic doit/1.
 
 %============================================================================================
 %                                       MENU
 
-menu :-repeat,
+menu :- repeat,
     write('                        '),nl,
     write('+----------------------------------------------------------------------------------------------------+'),nl,
     write('|  GREEN DISTRIBUTION                                                                                |'),nl,
@@ -32,3 +32,16 @@ menu :-repeat,
     Choice=0,
     !.
 
+doit(1) :-
+    write('                        '),nl,
+    write('Insira o numero de um nodo:'),nl,
+    read(R), R>0,
+    write('                        '),nl,
+    circuito(R,N),
+    write('Circuitos Gerados: '),write(N),nl,
+    !.
+
+doit(0) :- 
+    sleep(1),
+    halt,
+    !.
