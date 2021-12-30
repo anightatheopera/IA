@@ -41,6 +41,15 @@ doit(1) :-
     write('Circuitos Gerados: '),write(N),nl,
     !.
 
+doit(2) :- 
+    write('                        '),nl,
+    write('Insira o numero de um nodo:'),nl,
+    read(R), R>0,
+    write('                        '),nl,
+    adjacentes(R,N),
+    write('Pontos de Entrega: '),write(N),nl,
+    !.
+
 doit(0) :- 
     sleep(1),
     halt,
