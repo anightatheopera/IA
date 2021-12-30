@@ -50,6 +50,15 @@ doit(2) :-
     write('Pontos de Entrega: '),write(N),nl,
     !.
 
+doit(5) :- 
+    write('                        '),nl,
+    write('Insira o numero do nodo final:'),nl,
+    read(R), R>0,
+    write('                        '),nl,
+    menorDist(R,X),
+    write('Circuito mais rapido, utilizando o criterio de distancia: '),write(X),nl,
+    !.
+
 doit(0) :- 
     sleep(1),
     halt,
