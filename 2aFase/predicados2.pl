@@ -3,7 +3,7 @@
 
 %predicado 1:
 circuito(Node,Paths):-
-	solveAllDepthFirst(Node,Paths).
+	solveAll(Node,Paths).
 
 
 %predicado 2 acho eu
@@ -19,6 +19,7 @@ adjacentes(Nodo,Adjs) :-
 %predicado 4:
 maisEficiente(Dest,PesoEnc,TempoRest,(Veiculo,(Caminho,DistMin))) :-
     circuito(Dest,Caminhos),
+    trace,
     min_on_snd(Caminhos,(Caminho,DistMin)),
     calculaVelF(PesoEnc,(Veiculo,Vel)),
     VMin is DistMin/TempoRest,
