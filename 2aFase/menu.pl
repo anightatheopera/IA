@@ -35,7 +35,7 @@ menu :- repeat,
 doit(1) :-
     write('                        '),nl,
     write('Insira o numero de um nodo:'),nl,
-    read(R), R>0,
+    read(R), R>=0,
     write('                        '),nl,
     circuito(R,N),
     write('Circuitos Gerados: '),write(N),nl,
@@ -44,7 +44,7 @@ doit(1) :-
 doit(2) :- 
     write('                        '),nl,
     write('Insira o numero de um nodo:'),nl,
-    read(R), R>0,
+    read(R), R>=0,
     write('                        '),nl,
     adjacentes(R,N),
     write('Pontos de Entrega: '),write(N),nl,
@@ -64,16 +64,29 @@ doit(4) :-
     write('Veiculo: '),write(V),nl,
     write('Caminho: '),write(C),nl,
     write('Distancia: '),write(Dm),nl,
-    write('                        '),nl,
     !.
 
 doit(5) :- 
     write('                        '),nl,
     write('Insira o numero do nodo final:'),nl,
-    read(R), R>0,
+    read(R), R>=0,
     write('                        '),nl,
     menorDist(R,X),
     write('Circuito mais rapido, utilizando o criterio de distancia: '),write(X),nl,
+    !.
+
+doit(6) :-
+    write('                        '),nl,
+    write('Insira o numero do nodo final:'),nl,
+    read(R), R>=0,
+    write('                        '),nl,
+    write('Insira o Peso da encomenda: '),nl,
+    read(P), P>=0,
+    write('                        '),nl,
+    maisFast(R,P,(V,C,T)),
+    write('Veiculo: '),write(V),nl,
+    write('Caminho: '),write(C),nl,
+    write('Tempo: '),write(T),nl,
     !.
 
 doit(0) :- 
