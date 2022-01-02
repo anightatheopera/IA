@@ -31,3 +31,8 @@ menorDist(NodoFinal, Res) :-
     min_on_snd(X,Res).
 
 %predicado 6:
+maisFast(NodoFinal, Peso, (Veiculo,Path,Time)) :- 
+    circuito(NodoFinal, Paths),
+    min_on_snd(Paths,(Path/Cost)),
+    calculaVelF(Peso,(Veiculo,Vel)),
+    Time is (Cost/Vel)*60.
