@@ -50,6 +50,23 @@ doit(2) :-
     write('Pontos de Entrega: '),write(N),nl,
     !.
 
+doit(4) :-
+    write('                        '),nl,
+    write('Insira o seu Destino:'),nl,
+    read(D), D>0,
+    write('                        '),nl,
+    write('Insira o Peso da encomenda:'),nl,
+    read(P), P>0,
+    write('                        '),nl,
+    write('Insira o Tempo:'),nl,
+    read(T), T>0,
+    maisEficiente(D,P,T,(V,(C,Dm))),
+    write('Veiculo: '),write(V),nl,
+    write('Caminho: '),write(C),nl,
+    write('Distancia: '),write(Dm),nl,
+    write('                        '),nl,
+    !.
+
 doit(5) :- 
     write('                        '),nl,
     write('Insira o numero do nodo final:'),nl,
