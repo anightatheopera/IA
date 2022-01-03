@@ -15,8 +15,7 @@ adjacentes(Nodo,Adjs) :-
 
 %predicado 3:
 pred3(Res) :-
-    solveAllDepthFirst_NwV(Res),
-    escrever(Res).
+    solveAllDepthFirst_NwV(Res).
 
 
 %predicado 4:

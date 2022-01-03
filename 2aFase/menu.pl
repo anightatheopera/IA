@@ -53,7 +53,7 @@ doit(2) :-
 doit(3) :-
     pred3(L),
     write('                        '),nl,
-    write('Circuitos com maior numero de entregas: '),nl,nl,escrever(L),nl,
+    write('Circuitos com maior numero de entregas: '),nl,nl,q3Print(L),nl,
     !.
 
 doit(4) :-

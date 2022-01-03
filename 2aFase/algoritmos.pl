@@ -291,7 +291,7 @@ quicksort([X|Xs],Ys) :-
 	partition(Xs,Num,Left,Right),
 	quicksort(Left,Ls),
 	quicksort(Right,Rs),
-	append1(Ls,[X|Rs],Ys).
+	append(Ls,[X|Rs],Ys).
 quicksort([],[]).
   
 partition([X|Xs],Y,[X|Ls],Rs) :-
@@ -302,23 +302,20 @@ partition([X|Xs],Y,Ls,[X|Rs]) :-
 	(_,Num,_,_) = X,
 	Num < Y, 
 	partition(Xs,Y,Ls,Rs).
-partition([],Y,[],[]).
+partition([],_,[],[]).
   
-append1([],Ys,Ys).
-append1([X|Xs],Ys,[X|Zs]) :- append1(Xs,Ys,Zs).
-
-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % SolveAll Algorithm
 % Merge All outputs to a list
 
-solveAllDepthFirst_NwV1(Node,_,L):-
+solveAllDepthFirst_NwV1(Node,L):-
 	addDest(Node),                                                        
 	findall((Path,N,W,V),solve_depthfirst_cyclefree_NWV(Path,(N,W,V)),L),                                            
 	remDest(Node).                                                        
 											   
 solveAllDepthFirst_NwV(Res):-
 	findall(N,node(N,_),Ln),
-	foldl(solveAllDepthFirst_NwV1,Ln,[],Res1),
-	quicksort(Res1,Res).
+	maplist(solveAllDepthFirst_NwV1,Ln,Res1),
+	append(Res1,Res2),
+	quicksort(Res2,Res).
 

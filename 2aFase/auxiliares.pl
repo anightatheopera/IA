@@ -58,3 +58,11 @@ concatenar([L1,L2|Ls],Res) :-
     concat(L1,L2,L3),
     concatenar([L3|Ls],C),
     C is Res.
+
+%____
+%Print
+q3Print([]).
+q3Print([X|L]):-
+	(A,B,C,D) = X,
+		format('{  Caminho: ~w,\n\t Numero de Encomendas: ~d,\n\t Peso Total: ~2f,\n\t Volume Total: ~2f  };\n',[A,B,C,D]),
+		q3Print(L).
