@@ -279,49 +279,46 @@ solveAll(Node,L):-
 	merge_list(IN,ID,O1),
 	merge_list(DF,AS,O2),
 	merge_list(O1,GD,O3),
-	merge_list(O2,O3,L),
+	merge_list(O2,O3,O4),
+	sort(O4,L),
 	remDest(Node).
 
 %--------------------------------- - - - - - - -- -  -- - - - - - - - - -  
 % QuickSort Algorithm
 
-%quicksort([(_,Num,_,_)|Xs],Ys) :-
-%	partition(Xs,Num,Left,Right),
-%	quicksort(Left,Ls),
-%	quicksort(Right,Rs),
-%	append1(Ls,[Num|Rs],Ys).
-%quicksort([],[]).
-%  
-%partition([(_,Num,_,_)|Xs],Y,[(_,Num,_,_)|Ls],Rs) :-
-%	Num =< Y,
-%	partition(Xs,Y,Ls,Rs).
-%partition([(_,Num,_,_)|Xs],Y,Ls,[(_,Num,_,_)|Rs]) :-
-%	Num > Y, 
-%	partition(Xs,Y,Ls,Rs).
-%partition([],_,[],[]).
-%  
-%append1([],Ys,Ys).
-%append1([X|Xs],Ys,[X|Zs]) :- append1(Xs,Ys,Zs).
-
-%pivot(_, [], [], []).
-%pivot(Pivot, [(_,Head,_,_)|Tail], [(_,Head,_,_)|LessOrEqualThan], GreaterThan) :- Pivot < Head, pivot(Pivot, Tail, LessOrEqualThan, GreaterThan). 
-%pivot(Pivot, [(_,Head,_,_)|Tail], LessOrEqualThan, [(_,Head,_,_)|GreaterThan]) :- pivot(Pivot, Tail, LessOrEqualThan, GreaterThan).
-%
-%quicksort([], []).
-%quicksort([(_,Head,_,_)|Tail], Sorted) :- pivot((_,Head,_,_), Tail, List1, List2), quicksort(List1, SortedList1), quicksort(List2, SortedList2), append(SortedList1, [(_,Head,_,_)|SortedList2], Sorted).
+quicksort([X|Xs],Ys) :-
+	(_,Num,_,_) = X,
+	partition(Xs,Num,Left,Right),
+	quicksort(Left,Ls),
+	quicksort(Right,Rs),
+	append1(Ls,[X|Rs],Ys).
+quicksort([],[]).
+  
+partition([X|Xs],Y,[X|Ls],Rs) :-
+	(_,Num,_,_) = X,
+	Num >= Y,
+	partition(Xs,Y,Ls,Rs).
+partition([X|Xs],Y,Ls,[X|Rs]) :-
+	(_,Num,_,_) = X,
+	Num < Y, 
+	partition(Xs,Y,Ls,Rs).
+partition([],Y,[],[]).
+  
+append1([],Ys,Ys).
+append1([X|Xs],Ys,[X|Zs]) :- append1(Xs,Ys,Zs).
 
 
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 % SolveAll Algorithm
 % Merge All outputs to a list
 
-solveAllDepthFirst_NwV1(Node,L):-
+solveAllDepthFirst_NwV1(Node,_,L):-
 	addDest(Node),                                                        
 	findall((Path,N,W,V),solve_depthfirst_cyclefree_NWV(Path,(N,W,V)),L),                                            
 	remDest(Node).                                                        
 											   
 solveAllDepthFirst_NwV(Res):-
 	findall(N,node(N,_),Ln),
-	maplist(solveAllDepthFirst_NwV1,Ln,Res).
-	%quicksort(L,Res).
+	foldl(solveAllDepthFirst_NwV1,Ln,[],Res1),
+	quicksort(Res1,Res).
 

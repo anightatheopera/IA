@@ -45,3 +45,16 @@ inverso(Xs, Ys):-
 inverso([], Xs, Xs).
 inverso([X|Xs],Ys, Zs):-
 	inverso(Xs, [X|Ys], Zs).
+
+removeEmptyL([[]|Ls], Res) :- removeEmptyL(Ls,Res).
+removeEmptyL([L|Ls],Res) :- 
+    removeEmptyL(Ls,Res2),
+    append(L,Res2,Res).
+
+concatenar([],[]).
+concatenar([[],X|Ls],Res) :- concatenar([X|Ls],Res).
+concatenar([X,[]|Ls],Res) :- concatenar([X|Ls],Res).
+concatenar([L1,L2|Ls],Res) :-
+    concat(L1,L2,L3),
+    concatenar([L3|Ls],C),
+    C is Res.
