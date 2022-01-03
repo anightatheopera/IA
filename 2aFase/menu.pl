@@ -11,7 +11,7 @@ menu :- repeat,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('|  1 | Gerar circuitos de entrega, caso existam, que cubram um determinado territorio                |'),nl,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
-    write('|  2 | Representação de diversos pontos de entrega em forma de grafo                                 |'),nl,
+    write('|  2 | Representacao de diversos pontos de entrega em forma de grafo                                 |'),nl,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('|  3 | Identificar quais os circuitos com maior numero de entregas                                   |'),nl,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
@@ -23,7 +23,7 @@ menu :- repeat,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('|  0 | Sair do programa                                                                              |'),nl,
     write('+----------------------------------------------------------------------------------------------------+'),nl,
-    write('Escolha uma opção: '),nl,
+    write('Escolha uma opcao: '),nl,
     read(Choice),
     0=<Choice,
     Choice=<12,
@@ -48,6 +48,12 @@ doit(2) :-
     write('                        '),nl,
     adjacentes(R,N),
     write('Pontos de Entrega: '),write(N),nl,
+    !.
+
+doit(3) :-
+    pred3(L),
+    write('                        '),nl,
+    wrtie('Circuitos com maior numero de entregas: '),write(L),nl,
     !.
 
 doit(4) :-
