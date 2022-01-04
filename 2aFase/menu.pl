@@ -11,7 +11,7 @@ menu :- repeat,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('|  1 | Gerar circuitos de entrega, caso existam, que cubram um determinado territorio                |'),nl,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
-    write('|  2 | Representacao de diversos pontos de entrega em forma de grafo                                 |'),nl,
+    write('|  2 | Visualizar nodos adjacentes de um ponto de entrega                                            |'),nl,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('|  3 | Identificar quais os circuitos com maior numero de entregas                                   |'),nl,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
@@ -47,7 +47,7 @@ doit(2) :-
     read(R), R>=0,
     write('                        '),nl,
     adjacentes(R,N),
-    write('Pontos de Entrega: '),write(N),nl,
+    write('Pontos de Entrega Adjacentes: '),write(N),nl,
     !.
 
 doit(3) :-
