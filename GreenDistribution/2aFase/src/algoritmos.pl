@@ -13,6 +13,8 @@ remocao(Termo) :- assertz(Termo),!,fail.
 
 origem(0).
 
+list_tail([_|Xs],Xs).
+
 adjacent(X,Y,C):- aresta(X,Y,C).
 adjacent(X,Y,C):- aresta(Y,X,C).
 
@@ -49,6 +51,13 @@ move_cyclefree_NWV(Visited, Node, NextNode, (NumEncs, Weight, Volume)) :-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Inefficient Search%
 
+caminhoT(O,Node,Cam,Cost):-
+	caminho(O,Node,P,C),
+	reverse(P,Back),
+	list_tail(Back,PBack),
+	append(P,PBack,Cam),
+	Cost is C*2.
+
 caminho(A,B,P,C):- caminho1(A,[B],P,C).
 caminho1(A,[A|P1],[A|P1],0).
 caminho1(A,[Y|P1],P,C):- 
@@ -62,8 +71,11 @@ caminho1(A,[Y|P1],P,C):-
 
 solve_depthfirst_cyclefree(Path,Cost) :-
 	origem(Node),
-	depthfirst_cyclefree([Node], Node, RevPath, Cost),
-	reverse(RevPath, Path).
+	depthfirst_cyclefree([Node], Node, RevPath, C),
+	reverse(RevPath, PathT),
+	list_tail(RevPath,Back),
+	append(PathT,Back,Path),
+	Cost is C*2.
 
 depthfirst_cyclefree(Visited, Node, Visited, 0) :-
 	destino(Node).
@@ -78,7 +90,9 @@ depthfirst_cyclefree(Visited, Node, Path, Cost) :-
 solve_depthfirst_cyclefree_NWV(Path,(NumEncs, Weight, Volume)) :-
 	origem(Node),
 	depthfirst_cyclefree_NWV([Node], Node, RevPath, (NumEncs, Weight, Volume)),
-	reverse(RevPath, Path).
+	reverse(RevPath, PathT),
+	list_tail(RevPath,Back),
+	append(PathT,Back,Path).
 
 depthfirst_cyclefree_NWV(Visited, Node, Visited, (NumEncs,0,0)) :-
 	destino(Node),
@@ -97,9 +111,12 @@ depthfirst_cyclefree_NWV(Visited, Node, Path, (NumEncs, Weight, Volume)) :-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Iterative Deepening Search%
 
-reversP(O,Node,Cam,Cost):-
-	path(O, Node, RevPath,Cost),
-	reverse(RevPath, Cam).
+reversP(O,Node,Path,Cost):-
+	path(O, Node, RevPath,C),
+	reverse(RevPath, Cam),
+	list_tail(RevPath,Back),
+	append(Cam,Back,Path),
+	Cost is C*2.
 
 
 path(Node, Node, [Node],0).
@@ -111,10 +128,13 @@ path(FirstNode, LastNode, [LastNode|Path],Cost) :-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Astar Search%
 
-solve_astar(Nodo,CaminhoDistancia/CustoDist) :-
+solve_astar(Nodo,Caminho/CustoDist) :-
 	estimativa(Nodo,EstimaD),
-	aStar([[Nodo]/0/EstimaD],InvCaminho/CustoDist/_),
-	reverse(InvCaminho,CaminhoDistancia).
+	aStar([[Nodo]/0/EstimaD],InvCaminho/CD/_),
+	reverse(InvCaminho,CaminhoDistancia),
+	list_tail(InvCaminho,BackCaminho),
+	append(CaminhoDistancia,BackCaminho,Caminho),
+	CustoDist is CD*2.
 
 aStar(Caminhos,Caminho) :-
 	getBest(Caminhos,Caminho),
@@ -141,10 +161,13 @@ expandAstar(Path, ExpPaths) :-
 %--------------------------------- - - - - - - - - - -  -  -  -  -   -
 %Greedy Search%
 
-solve_greedy(Nodo,CaminhoDistancia/CustoDist) :-
+solve_greedy(Nodo,Path/Cost) :-
 	estimativa(Nodo,EstimaD),
 	greedy([[Nodo]/0/EstimaD],InvCaminho/CustoDist/_),
-	reverse(InvCaminho,CaminhoDistancia).
+	reverse(InvCaminho,CaminhoDistancia),
+	list_tail(InvCaminho,Back),
+	append(CaminhoDistancia,Back,Path),
+	Cost is CustoDist*2.
 
 greedy(Caminhos,Caminho) :-
 	getBestGreedy(Caminhos,Caminho),
@@ -182,13 +205,13 @@ expandGreedy(Caminho,ExpCaminhos) :-
 solveInefeciente(Node,Cam,Cost):-
 	addDest(Node),
 	origem(G),
-	caminho(G,Node,Cam,Cost),
+	caminhoT(G,Node,Cam,Cost),
 	remDest(Node).
 
 solveAllInefeciente(Node,L):-
 	addDest(Node),
 	origem(G),
-	findall((P,C),caminho(G,Node,P,C),L),
+	findall((P,C),caminhoT(G,Node,P,C),L),
 	remDest(Node).
 
 %Iterative Deepening Search%
@@ -202,8 +225,7 @@ solveAllInefeciente(Node,L):-
 solveIterativeDeepening(Node,Cam,Cost) :-
 	addDest(Node),
 	origem(O),
-	path(O, Node, RevPath,Cost),
-	reverse(RevPath, Cam),
+	reversP(O,Node,Cam,Cost),
 	remDest(Node).
 
 solveAllIterativeDeepening(Node,L) :-
@@ -237,9 +259,7 @@ solveAllDepthFirst(Node,L):-
 solveAstar(Node,Cam):-
 	addDest(Node),
 	origem(NO),
-	solve_astar(NO,Cam),
-	remDest(Node).
-
+	solve_astar(NO,Cam).
 solveAllAstar(Node,L):-
 	addDest(Node),
 	origem(NO),
@@ -270,7 +290,7 @@ solveAllGreedy(Node,L):-
 solveAll(Node,L):-
 	addDest(Node),
 	origem(O),
-	findall((P/C),caminho(O,Node,P,C),IN),
+	findall((P/C),caminhoT(O,Node,P,C),IN),
 	reversP(O,Node,P1,C1),
 	ID = [P1/C1],
 	findall((P2/C2),solve_depthfirst_cyclefree(P2,C2),DF),
