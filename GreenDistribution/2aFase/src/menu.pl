@@ -21,12 +21,14 @@ menu :- repeat,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('|  6 | Escolher o circuito mais ecologico, utilizando o criterio de tempo                            |'),nl,
     write('+----+-----------------------------------------------------------------------------------------------+'),nl,
+    write('|  7 | Visualizar graficamente o grafo                                                               |'),nl,
+    write('+----+-----------------------------------------------------------------------------------------------+'),nl,
     write('|  0 | Sair do programa                                                                              |'),nl,
     write('+----------------------------------------------------------------------------------------------------+'),nl,
     write('Escolha uma opcao: '),nl,
     read(Choice),
     0=<Choice,
-    Choice=<12,
+    Choice=<7,
     (Choice == 0 -> write('A sair do programa...'), nl, doit(Choice); doit(Choice)),
     sleep(2),
     Choice=0,
@@ -95,6 +97,10 @@ doit(6) :-
     write('Caminho: '),write(C),nl,
     write('Tempo: '),write(T),nl,
     !.
+
+doit(7) :-
+  shell('./view.sh'),
+  !.
 
 doit(0) :- 
     sleep(1),
