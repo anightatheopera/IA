@@ -2,4 +2,4 @@
 
 python -m pip install networkx matplotlib scipy
 
-python python.py
+python show_graph.py
