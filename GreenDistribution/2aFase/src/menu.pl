@@ -66,6 +66,7 @@ doit(4) :-
     write('                        '),nl,
     write('Insira o Tempo:'),nl,
     read(T), T>=0,
+    write('                        '),nl,
     maisEficiente(D,P,T,(V,(C,Dm))),
     write('Veiculo: '),write(V),nl,
     write('Caminho: '),write(C),nl,
