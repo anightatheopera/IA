@@ -1,4 +1,4 @@
-%node(Nodo,Encomendas).
+%nodo(Nodo,Encomendas).
 node(1,[1, 36, 38]).
 node(2,[2, 23, 30, 55]).
 node(3,[3, 12, 15, 27, 33, 41, 65]).

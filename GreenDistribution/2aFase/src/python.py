@@ -29,7 +29,7 @@ class Path:
     def __init__(self,Ni,Nf):
         self.source = Ni
         self.dest = Nf
-        self.cost = random.randint(1,15)
+        self.cost = random.randint(1,6)
     def write_path(self):
         return("aresta(" + str(self.source) + "," + str(self.dest) + ","+ str(self.cost) + "),")
     def printpath(self):
@@ -79,7 +79,7 @@ def grafo():
         sys.stdout = f # Change the standard output to the file we created.        
         print("%estimativa(Nodo,Estimativa).")        
         for i in range(n+1):    
-            print("estimativa("+str(i)+','+str(random.randint(20,100))+").")    
+            print("estimativa("+str(i)+','+str(random.randint(5,40))+").")    
     sys.stdout = original_stdout # Reset the standard output to its original value
     return g
 

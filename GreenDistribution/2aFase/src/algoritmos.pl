@@ -1,4 +1,11 @@
 :- consult([nodos,encomendas,estimativas,arestas,graph]).
+
+hasNext(Nodo,Adjs) :-     
+    findall(Adj,    
+           (aresta(Nodo,Adj,_);    
+           aresta(Adj,Nodo,_)),    
+           Adjs).
+
 addDest(Node):-
 	insercao(destino(Node)).
 
@@ -287,7 +294,13 @@ solveAllGreedy(Node,L):-
 % SolveAll Algorithm
 % Merge All outputs to a list
 
+solveAll(Node,[]):-
+	hasNext(Node,E),
+	length(E,A),
+	(A=0).
 solveAll(Node,L):-
+	hasNext(Node,E),
+	length(E,A),A>0,
 	addDest(Node),
 	origem(O),
 	findall((P/C),caminhoT(O,Node,P,C),IN),

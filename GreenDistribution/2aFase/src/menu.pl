@@ -38,8 +38,8 @@ doit(1) :-
     read(R), R>=0,
     write('                        '),nl,
     circuito(R,N),
-    write('Circuitos Gerados: '),write(N),nl,
-    !.
+    (length(N,0) -> writeln('Não existem caminhos para esse nodo.') ; write('Circuitos Gerados: '),write(N),nl)
+    ,!.
 
 doit(2) :- 
     write('                        '),nl,
