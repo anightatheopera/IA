@@ -95,11 +95,11 @@ doit(6) :-
     maisFast(R,P,(V,C,T)),
     write('Veiculo: '),write(V),nl,
     write('Caminho: '),write(C),nl,
-    write('Tempo: '),write(T),nl,
+    write('Tempo: '),format('~2f Horas\n', [T]),nl,
     !.
 
 doit(7) :-
-  shell('./view.sh'),
+  shell('sh view.sh'),
   !.
 
 doit(0) :- 
