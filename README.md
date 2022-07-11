@@ -1,9 +1,7 @@
 # IA
-IA projects 21/22
+Trabalho de Inteligência Artificial, ano letivo 2021/2022
 
-Classification: 
-
-# Authors:
+# Autores:
 * Miguel Gomes([@MayorX500](https://github.com/MayorX500))
 * Ariana Lousada([@AITK42](https://github.com/AITK42))
 * Rita Lino([@anightatheopera](https://github.com/anightatheopera))
